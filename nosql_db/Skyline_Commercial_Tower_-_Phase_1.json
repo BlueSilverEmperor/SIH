@@ -1,0 +1,768 @@
+[
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1967595958",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "site_note_5.txt",
+    "rel_file_path": "uploads/text_logs/site_note_5.txt",
+    "file_category": "text_log",
+    "file_size_bytes": 0,
+    "notes": "Daily site log notes",
+    "created_at": "2026-09-08T20:45:47.397855",
+    "metadata": {
+      "source_author": "QA Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3328333823",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_27.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_27.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-04T20:05:12.782931",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2659129566",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_27.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_27.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-04T20:05:12.795858",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2310629580",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "2D_Technical_Blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj9_2D_Technical.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T20:58:22.851777",
+    "metadata": {
+      "wall_count": 14,
+      "column_count": 18,
+      "slab_area_sqm": 450.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o5XzJEX1RlY2huaWNhbC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0LjAwMDAgLTAuNTAwMCAtOS4wMDAwDQp2IDE0LjAwMDAgLTAuNTAwMCAtOS4w...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1311014162",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_28.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_28.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-04T20:05:25.253697",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_631145944",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_28.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_28.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-04T20:05:25.265747",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1990050135",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_29.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_29.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-04T20:56:53.439362",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1416991473",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_29.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_29.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-04T20:56:53.476753",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1605821571",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_30.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_30.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-04T20:58:22.681017",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2352665767",
+    "project_id": 9,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_30.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_30.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-04T20:58:22.702982",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2868909023",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_31.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_31.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:48:42.874179",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2037068982",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_31.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_31.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:48:42.922963",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3030554318",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "2D_Technical_Blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj1_2D_Technical.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T20:45:47.625371",
+    "metadata": {
+      "wall_count": 14,
+      "column_count": 18,
+      "slab_area_sqm": 450.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxXzJEX1RlY2huaWNhbC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0LjAwMDAgLTAuNTAwMCAtOS4wMDAwDQp2IDE0LjAwMDAgLTAuNTAwMCAtOS4w...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_554482277",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_32.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_32.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:56:56.599696",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2117762282",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_32.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_32.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:56:56.624999",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1873113159",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_33.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_33.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:57:23.428713",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2111964665",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_33.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_33.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:57:23.457078",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3825434245",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_34.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_34.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:57:47.237954",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2893549620",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_34.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_34.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:57:47.279632",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2051659581",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_35.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_35.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:58:08.940400",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2850498539",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_35.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_35.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:58:08.966913",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3884292130",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_36.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_36.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T19:58:29.396227",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1227301657",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_36.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_36.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T19:58:29.437064",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1229766593",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_37.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_37.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T20:04:02.845849",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_599834083",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_37.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_37.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T20:04:02.860206",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1501641103",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_38.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_38.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-07T20:07:16.331170",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3610139094",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_38.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_38.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-07T20:07:16.345139",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_517826626",
+    "project_id": 11,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "2D_Technical_Blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj11_2D_Technical.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33249,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T12:18:07.400032",
+    "metadata": {
+      "wall_count": 18,
+      "column_count": 24,
+      "slab_area_sqm": 550.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxMV8yRF9UZWNobmljYWwubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBSZXNpZGVudGlhbF9Ib3VzZQ0KDQp2IC0xNS40NTAwIC0wLjUwMDAgLTkuODUwMA0KdiAxNS40NTAwIC0wLjUwMDAgLTku...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3717777454",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_39.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_39.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T14:07:55.896595",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1224069380",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_39.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_39.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T14:07:55.962491",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1344014345",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_40.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_40.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T14:08:17.264068",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1036721028",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_40.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_40.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T14:08:17.309780",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_676861799",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_41.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_41.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T14:08:46.724994",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1180521694",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_41.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_41.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T14:08:46.777334",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3082058304",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_42.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_42.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T20:00:50.812172",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_2354947607",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_42.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_42.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T20:00:50.830533",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3196309400",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_43.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_43.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T20:35:27.800480",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_3319512024",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_43.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_43.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T20:35:27.816331",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_163927035",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "foundation_photo_44.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_44.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-08T20:45:47.467480",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Skyline_Commercial_Tower_-_Phase_1_1205034696",
+    "project_id": 1,
+    "project_name": "Skyline Commercial Tower - Phase 1",
+    "project_code": "PRJ-SKY-2026",
+    "nosql_table_name": "Skyline_Commercial_Tower_-_Phase_1",
+    "filename": "inv_steel_rebar_44.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_44.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-08T20:45:47.492202",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  }
+]

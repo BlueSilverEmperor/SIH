@@ -1,0 +1,86 @@
+[
+  {
+    "doc_id": "Add-On_Test_Construction_Site_3155061812",
+    "project_id": 7,
+    "project_name": "Add-On Test Construction Site",
+    "project_code": "PRJ-ADDON-TEST",
+    "nosql_table_name": "Add-On_Test_Construction_Site",
+    "filename": "blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj7_blueprint.pd.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T19:37:43.047482",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 500.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o3X2JsdWVwcmludC5wZC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0Ljc1MDAgLTAuNTAwMCAtOS40NTAwDQp2IDE0Ljc1MDAgLTAuNTAwMCAtOS40...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Add-On_Test_Construction_Site_3342827370",
+    "project_id": 8,
+    "project_name": "Add-On Test Construction Site",
+    "project_code": "PRJ-ADDON-TEST",
+    "nosql_table_name": "Add-On_Test_Construction_Site",
+    "filename": "blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj8_blueprint.pd.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T19:48:31.646344",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 500.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o4X2JsdWVwcmludC5wZC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0Ljc1MDAgLTAuNTAwMCAtOS40NTAwDQp2IDE0Ljc1MDAgLTAuNTAwMCAtOS40...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Add-On_Test_Construction_Site_1337856485",
+    "project_id": 9,
+    "project_name": "Add-On Test Construction Site",
+    "project_code": "PRJ-ADDON-TEST",
+    "nosql_table_name": "Add-On_Test_Construction_Site",
+    "filename": "blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj9_blueprint.pd.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T20:58:22.181014",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 500.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o5X2JsdWVwcmludC5wZC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0Ljc1MDAgLTAuNTAwMCAtOS40NTAwDQp2IDE0Ljc1MDAgLTAuNTAwMCAtOS40...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Add-On_Test_Construction_Site_2693896661",
+    "project_id": 1,
+    "project_name": "Add-On Test Construction Site",
+    "project_code": "PRJ-ADDON-TEST",
+    "nosql_table_name": "Add-On_Test_Construction_Site",
+    "filename": "blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj1_blueprint.pd.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33248,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T20:52:44.288267",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 500.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxX2JsdWVwcmludC5wZC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0Ljc1MDAgLTAuNTAwMCAtOS40NTAwDQp2IDE0Ljc1MDAgLTAuNTAwMCAtOS40...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  }
+]

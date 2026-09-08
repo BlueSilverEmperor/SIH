@@ -1,0 +1,100 @@
+[
+  {
+    "doc_id": "Wood_log_cabin_2299526090",
+    "project_id": 7,
+    "project_name": "Wood log cabin",
+    "project_code": "PRJ-OAK-26",
+    "nosql_table_name": "Wood_log_cabin",
+    "filename": "American Farmhouse 201225 full.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj7_4c013e0b5eef.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33570,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T19:41:07.665780",
+    "metadata": {
+      "wall_count": 22,
+      "column_count": 24,
+      "slab_area_sqm": 620.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o3XzRjMDEzZTBiNWVlZi5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIFJlc2lkZW50aWFsX0hvdXNlDQoNCnYgLTE0LjgwMDAgLTAuNTAwMCAtMTEuNTAwMA0KdiAxNC44MDAwIC0wLjUwMDAgLTEx...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Wood_log_cabin_3924476955",
+    "project_id": 7,
+    "project_name": "Wood log cabin",
+    "project_code": "PRJ-OAK-26",
+    "nosql_table_name": "Wood_log_cabin",
+    "filename": "site_note_5.txt",
+    "rel_file_path": "uploads/text_logs/site_note_5.txt",
+    "file_category": "text_log",
+    "file_size_bytes": 0,
+    "notes": "Foundation ",
+    "created_at": "2026-09-04T20:20:13.844239",
+    "metadata": {
+      "source_author": "Chief Inspector Marcus Vance",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Wood_log_cabin_3756832369",
+    "project_id": 13,
+    "project_name": "Wood log cabin",
+    "project_code": "PRJ-OAK-26",
+    "nosql_table_name": "Wood_log_cabin",
+    "filename": "American Farmhouse 201225 full_1.pdf",
+    "rel_file_path": "uploads/photos/American Farmhouse 201225 full_1.pdf",
+    "file_category": "architectural_blueprint",
+    "file_size_bytes": 0,
+    "notes": "Architectural Blueprint File Initialized",
+    "created_at": "2026-09-08T19:53:36.286864",
+    "metadata": {},
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Wood_log_cabin_3674566430",
+    "project_id": 13,
+    "project_name": "Wood log cabin",
+    "project_code": "PRJ-OAK-26",
+    "nosql_table_name": "Wood_log_cabin",
+    "filename": "American Farmhouse 201225 full_1.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj13_American Far.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 107314,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T19:53:36.522799",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 520.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxM19BbWVyaWNhbiBGYXIubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBDb21tZXJjaWFsX1Rvd2VyDQoNCnYgLTE1LjQwMDAgLTAuNTAwMCAtMTAuMDAwMA0KdiAxNS40MDAwIC0wLjUwMDAgLTEw...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Wood_log_cabin_3232836222",
+    "project_id": 13,
+    "project_name": "Wood log cabin",
+    "project_code": "PRJ-OAK-26",
+    "nosql_table_name": "Wood_log_cabin",
+    "filename": "American Farmhouse 201225 full.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj13_4c013e0b5eef.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33571,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T19:54:31.745018",
+    "metadata": {
+      "wall_count": 22,
+      "column_count": 24,
+      "slab_area_sqm": 620.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxM180YzAxM2UwYjVlZWYubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBSZXNpZGVudGlhbF9Ib3VzZQ0KDQp2IC0xNC44MDAwIC0wLjUwMDAgLTExLjUwMDANCnYgMTQuODAwMCAtMC41MDAwIC0x...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  }
+]

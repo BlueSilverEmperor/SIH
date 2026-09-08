@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  sih_2026:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sih_2026:latest
+    container_name: SIH_2026
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - HOST=0.0.0.0
+      - DJANGO_SETTINGS_MODULE=constructsync_project.settings
+    restart: unless-stopped

@@ -1,0 +1,113 @@
+[
+  {
+    "doc_id": "Building_1424989418",
+    "project_id": 8,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "t2.pdf",
+    "rel_file_path": "uploads/photos/t2.pdf",
+    "file_category": "architectural_blueprint",
+    "file_size_bytes": 0,
+    "notes": "Architectural Blueprint File Initialized",
+    "created_at": "2026-09-04T19:50:03.345525",
+    "metadata": {},
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Building_559863501",
+    "project_id": 8,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "t2.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj8_t2.pdf_520.0.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 107313,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-04T19:50:03.529799",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 520.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2o4X3QyLnBkZl81MjAuMC5tdGwNCiMgQ29uc3RydWN0U3luYyBBSSBVbHRyYS1EZXRhaWxlZCAzRCBNb2RlbCAtIENvbW1lcmNpYWxfVG93ZXINCg0KdiAtMTUuNDAwMCAtMC41MDAwIC0xMC4wMDAwDQp2IDE1LjQwMDAgLTAuNTAwMCAtMTAu...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Building_3609986985",
+    "project_id": 10,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "American Farmhouse 201225 full.pdf",
+    "rel_file_path": "uploads/photos/American Farmhouse 201225 full.pdf",
+    "file_category": "architectural_blueprint",
+    "file_size_bytes": 0,
+    "notes": "Architectural Blueprint File Initialized",
+    "created_at": "2026-09-07T15:01:01.766192",
+    "metadata": {},
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Building_1854949606",
+    "project_id": 10,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "American Farmhouse 201225 full.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj10_American Far.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 107314,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-07T15:01:02.288410",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 520.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxMF9BbWVyaWNhbiBGYXIubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBDb21tZXJjaWFsX1Rvd2VyDQoNCnYgLTE1LjQwMDAgLTAuNTAwMCAtMTAuMDAwMA0KdiAxNS40MDAwIC0wLjUwMDAgLTEw...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Building_1580300576",
+    "project_id": 19,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "t2_1.pdf",
+    "rel_file_path": "uploads/photos/t2_1.pdf",
+    "file_category": "architectural_blueprint",
+    "file_size_bytes": 0,
+    "notes": "Architectural Blueprint File Initialized",
+    "created_at": "2026-09-08T21:45:16.210796",
+    "metadata": {},
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Building_2301539497",
+    "project_id": 19,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "t2_1.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj19_t2_1.pdf_520.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 107314,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-08T21:45:16.430596",
+    "metadata": {
+      "wall_count": 16,
+      "column_count": 20,
+      "slab_area_sqm": 520.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxOV90Ml8xLnBkZl81MjAubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBDb21tZXJjaWFsX1Rvd2VyDQoNCnYgLTE1LjQwMDAgLTAuNTAwMCAtMTAuMDAwMA0KdiAxNS40MDAwIC0wLjUwMDAgLTEw...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  }
+]
