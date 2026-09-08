@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}DockFlow AI - Shipbuilding & Drydock Telemetry Workspace{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-slate-900 via-cyan-950/40 to-slate-900 p-6 rounded-2xl border border-cyan-500/30 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1">
+            <div class="flex items-center space-x-3">
+                <span class="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <i class="fa-solid fa-ship text-xl"></i>
+                </span>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                        DockFlow AI — Shipbuilding Operational Workspace
+                        <span class="text-xs px-2.5 py-1 rounded-full font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                            Drydock Telemetry Active
+                        </span>
+                    </h1>
+                    <p class="text-sm text-slate-400">
+                        High-mix drydock milestone mapping, hull section assembly progress, and multi-camera vessel telemetry.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <a href="/cctv" class="px-3.5 py-2 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 font-semibold text-xs border border-cyan-500/30 transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-video"></i>
+                <span>Drydock CCTV</span>
+            </a>
+            <a href="/select-industry" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-layer-group text-cyan-400"></i>
+                <span>Switch Sector</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- KPI Summary Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fa-solid fa-anchor text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Drydock Berths</span>
+                <span class="text-2xl font-extrabold text-white font-mono">{{ metrics.total_drydock_berths|default:4 }}</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i class="fa-solid fa-ship text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Docked Vessels</span>
+                <span class="text-2xl font-extrabold text-emerald-400 font-mono">{{ metrics.active_docked_vessels|default:2 }}</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <i class="fa-solid fa-percent text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Hull Assembly</span>
+                <span class="text-2xl font-extrabold text-indigo-300 font-mono">{{ metrics.overall_hull_completion_pct|default:68.4 }}%</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                <i class="fa-solid fa-video text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Telemetry Feeds</span>
+                <span class="text-2xl font-extrabold text-rose-400 font-mono">{{ metrics.telemetry_cameras_count|default:4 }} Cams</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drydock Berth Status Table -->
+    <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+        <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-ship text-cyan-400"></i> Drydock Berth & Hull Section Telemetry Register
+            </h3>
+            <span class="text-xs text-slate-400">SIH26122 Maritime Drydock & Hull Welding Telemetry</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950/80 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                    <tr>
+                        <th class="px-4 py-3">Berth Code</th>
+                        <th class="px-4 py-3">Vessel & Hull #</th>
+                        <th class="px-4 py-3">Hull Section / Steel Grade</th>
+                        <th class="px-4 py-3">Steel Tonnage</th>
+                        <th class="px-4 py-3">Main Deck Welding</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3 text-right">Telemetry Link</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                    {% if metrics.berths %}
+                        {% for b in metrics.berths %}
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="px-4 py-3 font-mono font-bold text-white">{{ b.berth_code }}</td>
+                            <td class="px-4 py-3 font-bold text-slate-200">
+                                <span class="block text-white">{{ b.vessel_name }}</span>
+                                <span class="text-[11px] text-cyan-400 font-mono">{{ b.hull_number|default:"Hull #409" }}</span>
+                            </td>
+                            <td class="px-4 py-3 text-slate-400">
+                                <span class="block text-slate-200 font-medium">{{ b.hull_section }}</span>
+                                <span class="text-[11px] text-slate-400">{{ b.steel_grade|default:"DH36 Steel Plates" }}</span>
+                            </td>
+                            <td class="px-4 py-3 font-mono font-bold text-indigo-300">{{ b.steel_tonnage|default:800 }}T</td>
+                            <td class="px-4 py-3 font-mono font-bold text-cyan-400">{{ b.main_deck_welding_pct|default:74.0 }}%</td>
+                            <td class="px-4 py-3">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">
+                                    {{ b.docking_status }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-right font-mono">
+                                <a href="/cctv" class="text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center justify-end gap-1">
+                                    <i class="fa-solid fa-circle-play"></i> Telemetry Live
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="px-4 py-3 font-mono font-bold text-white">BERTH-03</td>
+                            <td class="px-4 py-3 font-bold text-slate-200">
+                                <span class="block text-white">Offshore Patrol Vessel</span>
+                                <span class="text-[11px] text-cyan-400 font-mono">Hull #409</span>
+                            </td>
+                            <td class="px-4 py-3 text-slate-400">
+                                <span class="block text-slate-200 font-medium">Main Deck Section H-04</span>
+                                <span class="text-[11px] text-slate-400">DH36 Steel Plates</span>
+                            </td>
+                            <td class="px-4 py-3 font-mono font-bold text-indigo-300">800T</td>
+                            <td class="px-4 py-3 font-mono font-bold text-cyan-400">74.0%</td>
+                            <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">DOCKED</span></td>
+                            <td class="px-4 py-3 text-right font-mono"><a href="/cctv" class="text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center justify-end gap-1"><i class="fa-solid fa-circle-play"></i> Telemetry Live</a></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

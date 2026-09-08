@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}EVM Analytics & Performance - ConstructSync AI{% endblock %}
+{% block page_title %}Earned Value Management Analytics{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+        <h2 class="text-xl font-bold text-white tracking-tight flex items-center space-x-2">
+            <span>Earned Value & Predictive Completion Engine</span>
+            <span class="text-xs bg-orange-600/20 text-orange-400 border border-orange-500/30 px-2.5 py-0.5 rounded-full font-mono">Real-Time AI Velocity</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Dynamic completion date forecasting based on live field output, SPI regression, critical path tasks, and supplier risk buffers.</p>
+    </div>
+</div>
+
+<!-- Predictive Completion & AI Forecast Header Card -->
+<div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 border border-slate-700/80 rounded-xl p-6 shadow-xl space-y-6">
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+        
+        <!-- Target Finish vs AI Forecast Date -->
+        <div class="flex flex-wrap items-center gap-6">
+            <div>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Baseline Target End Date</span>
+                <span class="text-2xl font-black text-slate-300 font-mono mt-1 block">{{ evm.predictive.target_end_date|default:'2026-12-30' }}</span>
+            </div>
+
+            <div class="text-slate-600 hidden sm:block text-xl"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div>
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-wider block flex items-center space-x-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>AI-Forecasted Completion Date</span>
+                </span>
+                <span class="text-3xl font-black font-mono mt-1 block text-white drop-shadow-sm">
+                    {{ evm.predictive.forecasted_end_date|default:'2026-12-30' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Schedule Variance Badge -->
+        <div class="flex flex-col items-start lg:items-end space-y-2">
+            {% if evm.predictive and evm.predictive.schedule_variance_days > 3 %}
+                <span class="px-4 py-2 rounded-xl text-sm font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40 flex items-center space-x-2 shadow-lg shadow-rose-900/20">
+                    <i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i>
+                    <span>+{{ evm.predictive.schedule_variance_days }} Days Behind Schedule</span>
+                </span>
+            {% elif evm.predictive and evm.predictive.schedule_variance_days < -3 %}
+                <span class="px-4 py-2 rounded-xl text-sm font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center space-x-2 shadow-lg shadow-cyan-900/20">
+                    <i class="fa-solid fa-bolt text-cyan-400 text-base"></i>
+                    <span>{{ evm.predictive.schedule_variance_days }} Days Ahead (Accelerated)</span>
+                </span>
+            {% else %}
+                <span class="px-4 py-2 rounded-xl text-sm font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center space-x-2 shadow-lg shadow-emerald-900/20">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                    <span>On Track with Baseline Schedule</span>
+                </span>
+            {% endif %}
+
+            <span class="text-xs text-slate-400 font-mono flex items-center space-x-1 mt-1">
+                <span class="text-slate-400 font-sans">Formula:</span>
+                <span class="bg-slate-950/70 text-slate-300 px-2 py-0.5 rounded border border-slate-700/80 text-[11px] font-mono">
+                    ETC<sub>days</sub> = [Remaining / (V<sub>eff</sub> &times; SPI)] + RiskBuffer
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Telemetry Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Live Velocity Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4 space-y-2">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Live Field Velocity</span>
+                <i class="fa-solid fa-gauge text-cyan-400"></i>
+            </div>
+            <div class="flex items-baseline space-x-2">
+                <span class="text-2xl font-black text-cyan-400 font-mono">{{ evm.predictive.actual_velocity|default:'0.0' }}</span>
+                <span class="text-xs text-slate-400">units / day</span>
+            </div>
+            <div class="text-[11px] text-slate-500">
+                Planned: <strong class="text-slate-300">{{ evm.predictive.planned_velocity|default:'0.0' }}</strong> units/day | SPI: <strong class="text-orange-400">{{ evm.predictive.spi|default:'1.0' }}</strong>
+            </div>
+        </div>
+
+        <!-- Supplier Risk Buffer Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4 space-y-2">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Supplier Risk Buffer</span>
+                <i class="fa-solid fa-truck-ramp-box text-orange-400"></i>
+            </div>
+            <div class="flex items-baseline space-x-2">
+                <span class="text-2xl font-black text-orange-400 font-mono">+{{ evm.predictive.supplier_risk_buffer_days|default:0 }}</span>
+                <span class="text-xs text-slate-400">Days Added</span>
+            </div>
+            <div class="text-[11px] text-slate-500">
+                Appended automatically when low Softmax probability suppliers are selected for critical tasks.
+            </div>
+        </div>
+
+        <!-- Remaining Days Forecast Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4 space-y-2">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase">
+                <span>Forecasted Days to Complete</span>
+                <i class="fa-solid fa-hourglass-end text-emerald-400"></i>
+            </div>
+            <div class="flex items-baseline space-x-2">
+                <span class="text-2xl font-black text-emerald-400 font-mono">{{ evm.predictive.remaining_forecast_days|default:0 }}</span>
+                <span class="text-xs text-slate-400">Days</span>
+            </div>
+            <div class="text-[11px] text-slate-500">
+                Remaining Work: <strong class="text-slate-300">{{ evm.predictive.total_remaining_qty|default:0 }}</strong> units across WBS tasks.
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier Risk Buffer Alert Breakdown -->
+    {% if evm.predictive and evm.predictive.supplier_risk_notes %}
+    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg space-y-1 text-xs">
+        <span class="font-bold text-amber-400 flex items-center space-x-1.5">
+            <i class="fa-solid fa-shield-cat"></i>
+            <span>Active Critical Path Supplier Risk Buffers:</span>
+        </span>
+        <ul class="list-disc list-inside text-slate-300 space-y-0.5 pl-2 font-mono">
+            {% for note in evm.predictive.supplier_risk_notes %}
+            <li>{{ note }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+
+<!-- EVM Performance Gauges & Core Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    
+    <!-- SPI Card -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase">Schedule Performance (SPI)</span>
+            <i class="fa-solid fa-gauge-high text-cyan-400 text-lg"></i>
+        </div>
+        <div class="flex items-baseline space-x-3">
+            <span class="text-3xl font-extrabold font-mono {% if evm.spi >= 1.0 %}text-emerald-400{% else %}text-amber-400{% endif %}">{{ evm.spi }}</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded {% if evm.spi >= 1.0 %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20{% else %}bg-amber-500/10 text-amber-400 border border-amber-500/20{% endif %}">
+                {% if evm.spi >= 1.0 %}On / Ahead Schedule{% else %}Behind Schedule{% endif %}
+            </span>
+        </div>
+        <p class="text-[11px] text-slate-500">Formula: $SPI = EV / PV$. Values $\ge 1.0$ signify project progression faster than baseline.</p>
+    </div>
+
+    <!-- CPI Card -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase">Cost Performance (CPI)</span>
+            <i class="fa-solid fa-coins text-emerald-400 text-lg"></i>
+        </div>
+        <div class="flex items-baseline space-x-3">
+            <span class="text-3xl font-extrabold font-mono {% if evm.cpi >= 1.0 %}text-emerald-400{% else %}text-rose-400{% endif %}">{{ evm.cpi }}</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded {% if evm.cpi >= 1.0 %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20{% else %}bg-rose-500/10 text-rose-400 border border-rose-500/20{% endif %}">
+                {% if evm.cpi >= 1.0 %}Under Budget{% else %}Over Budget{% endif %}
+            </span>
+        </div>
+        <p class="text-[11px] text-slate-500">Formula: $CPI = EV / AC$. Values $\ge 1.0$ indicate budget efficiency.</p>
+    </div>
+
+    <!-- Schedule Variance Card -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase">Schedule Variance (SV)</span>
+            <i class="fa-solid fa-clock-rotate-left text-slate-500 text-lg"></i>
+        </div>
+        <div class="text-2xl font-extrabold font-mono {% if evm.schedule_variance >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+            {% if evm.schedule_variance >= 0 %}+{% endif %}${{ evm.schedule_variance|currency:2 }}
+        </div>
+        <p class="text-[11px] text-slate-500">Formula: $SV = EV - PV$. Net monetary variance of schedule progress.</p>
+    </div>
+
+    <!-- Cost Variance Card -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase">Cost Variance (CV)</span>
+            <i class="fa-solid fa-scale-balanced text-orange-500 text-lg"></i>
+        </div>
+        <div class="text-2xl font-extrabold font-mono {% if evm.cost_variance >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+            {% if evm.cost_variance >= 0 %}+{% endif %}${{ evm.cost_variance|currency:2 }}
+        </div>
+        <p class="text-[11px] text-slate-500">Formula: $CV = EV - AC$. Net financial savings or cost overrun.</p>
+    </div>
+</div>
+
+<!-- Chart Visualizer Section -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm space-y-4">
+    <div class="flex items-center justify-between pb-3 border-b border-borderbg">
+        <h3 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-chart-area text-orange-500"></i>
+            <span>EVM Cumulative Curve (PV vs EV vs AC)</span>
+        </h3>
+        <span class="text-xs font-mono text-slate-400">Currency: USD ($)</span>
+    </div>
+
+    <div class="h-72 w-full pt-2">
+        <canvas id="evmChart"></canvas>
+    </div>
+</div>
+
+<!-- Historical Analytics Snapshot Table -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm space-y-4">
+    <div class="flex items-center justify-between pb-3 border-b border-borderbg">
+        <h3 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-history text-slate-400"></i>
+            <span>Historical EVM Analytics Snapshots</span>
+        </h3>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400 font-semibold uppercase tracking-wider border-b border-borderbg">
+                <tr>
+                    <th class="py-3 px-4">Snapshot Time</th>
+                    <th class="py-3 px-4 text-right">Planned Value (PV)</th>
+                    <th class="py-3 px-4 text-right">Earned Value (EV)</th>
+                    <th class="py-3 px-4 text-right">Actual Cost (AC)</th>
+                    <th class="py-3 px-4 text-right">Schedule Var (SV)</th>
+                    <th class="py-3 px-4 text-right">Cost Var (CV)</th>
+                    <th class="py-3 px-4 text-right">SPI</th>
+                    <th class="py-3 px-4 text-right">CPI</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-borderbg">
+                {% for log in analytics_logs %}
+                <tr class="hover:bg-slate-800/40 transition-all">
+                    <td class="py-3 px-4 font-mono text-slate-300">{{ log.snapshot_date|slice:":19" }}</td>
+                    <td class="py-3 px-4 text-right font-mono">${{ log.total_pv|currency:2 }}</td>
+                    <td class="py-3 px-4 text-right font-mono font-bold text-amber-400">${{ log.total_ev|currency:2 }}</td>
+                    <td class="py-3 px-4 text-right font-mono">${{ log.total_ac|currency:2 }}</td>
+                    <td class="py-3 px-4 text-right font-mono {% if log.schedule_variance >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+                        {% if log.schedule_variance >= 0 %}+{% endif %}${{ log.schedule_variance|currency:2 }}
+                    </td>
+                    <td class="py-3 px-4 text-right font-mono {% if log.cost_variance >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+                        {% if log.cost_variance >= 0 %}+{% endif %}${{ log.cost_variance|currency:2 }}
+                    </td>
+                    <td class="py-3 px-4 text-right font-mono font-bold {% if log.spi >= 1.0 %}text-emerald-400{% else %}text-amber-400{% endif %}">{{ log.spi }}</td>
+                    <td class="py-3 px-4 text-right font-mono font-bold {% if log.cpi >= 1.0 %}text-emerald-400{% else %}text-rose-400{% endif %}">{{ log.cpi }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const ctx = document.getElementById('evmChart').getContext('2d');
+    
+    // Parse historical snapshot logs from Jinja
+    const logs = {{ analytics_logs|tojson }};
+    logs.reverse(); // Chronological order
+
+    const labels = logs.length > 0 ? logs.map(l => l.snapshot_date ? l.snapshot_date.substring(11, 19) : 'Snapshot') : ['Initial', 'Current'];
+    const pvData = logs.length > 0 ? logs.map(l => l.total_pv) : [0, {{ evm.total_pv }}];
+    const evData = logs.length > 0 ? logs.map(l => l.total_ev) : [0, {{ evm.total_ev }}];
+    const acData = logs.length > 0 ? logs.map(l => l.total_ac) : [0, {{ evm.total_ac }}];
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Planned Value (PV)',
+                    data: pvData,
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Earned Value (EV)',
+                    data: evData,
+                    borderColor: '#fbbf24',
+                    backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Actual Cost (AC)',
+                    data: acData,
+                    borderColor: '#f43f5e',
+                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#94a3b8', font: { size: 12, weight: 'bold' } }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#64748b' },
+                    grid: { color: '#1e293b' }
+                },
+                y: {
+                    ticks: { color: '#64748b', callback: function(val) { return '$' + val.toLocaleString(); } },
+                    grid: { color: '#1e293b' }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+
+{% block title %}Supplier Matrix & Softmax Engine - ConstructSync AI{% endblock %}
+{% block page_title %}Supplier Matrix & Softmax Recommendation Model{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- Header Card -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            <div>
+                <div class="flex items-center space-x-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-truck-field"></i>
+                    <span>Multi-Criteria Vendor Evaluation & Softmax Selection Model</span>
+                </div>
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">Supplier Matrix & Procurement Analytics</h2>
+                <p class="text-slate-400 text-sm mt-1 max-w-3xl">
+                    Scores construction vendors across 5 weighted criteria (TCO/ROI 30%, Delivery 25%, Quality 20%, Stability 15%, ESG 10%) and computes Softmax probability distribution \(P(S_i) = \frac{e^{S_i/\tau}}{\sum e^{S_j/\tau}}\) for automated procurement decisions.
+                </p>
+            </div>
+
+            <button onclick="toggleAddSupplierModal()" class="px-5 py-2.5 rounded-lg text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add New Supplier</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Category Recommendations Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for cat, rec in recommendations.items %}
+        {% if rec %}
+        <div class="bg-cardbg border border-indigo-500/30 rounded-xl p-4 shadow-lg flex flex-col justify-between relative">
+            <div class="absolute top-3 right-3 text-xs bg-indigo-500/20 text-indigo-300 font-bold px-2 py-0.5 rounded border border-indigo-500/30">
+                Top Pick
+            </div>
+
+            <div>
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ cat }}</div>
+                <div class="text-lg font-extrabold text-white mt-1 truncate">{{ rec.name }}</div>
+                <div class="text-xs text-slate-400 mt-0.5">{{ rec.contact_email|default:'Verified Vendor' }}</div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+                <div>
+                    <div class="text-[10px] text-slate-400 uppercase">Weighted Score</div>
+                    <div class="text-sm font-extrabold text-emerald-400">{{ rec.weighted_score }}/100</div>
+                </div>
+
+                <div class="text-right">
+                    <div class="text-[10px] text-slate-400 uppercase">Softmax Probability</div>
+                    <div class="text-sm font-extrabold text-indigo-400">{{ rec.softmax_percentage }}%</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center space-x-2 overflow-x-auto pb-1">
+        {% for cat in categories_list %}
+        <a href="/suppliers?category={{ cat }}" class="px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all {% if selected_category == cat %}bg-indigo-600 text-white shadow-md shadow-indigo-600/20{% else %}bg-slate-900/80 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800{% endif %}">
+            {{ cat }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Supplier Selection Matrix Table -->
+    <div class="bg-cardbg border border-borderbg rounded-xl shadow-xl overflow-hidden">
+        <div class="p-5 border-b border-borderbg flex items-center justify-between">
+            <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                <i class="fa-solid fa-list-check text-indigo-400"></i>
+                <span>Vendor Evaluation Matrix ({{ suppliers|length }} Suppliers)</span>
+            </h3>
+            <span class="text-xs text-slate-400">Sorted by Softmax Probability \(P(S_i)\)</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+                <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                    <tr>
+                        <th class="py-3.5 px-4">Supplier Name</th>
+                        <th class="py-3.5 px-4">Category</th>
+                        <th class="py-3.5 px-4 text-center">TCO (30%)</th>
+                        <th class="py-3.5 px-4 text-center">Delivery (25%)</th>
+                        <th class="py-3.5 px-4 text-center">Quality (20%)</th>
+                        <th class="py-3.5 px-4 text-center">Stability (15%)</th>
+                        <th class="py-3.5 px-4 text-center">ESG (10%)</th>
+                        <th class="py-3.5 px-4 text-center">Weighted Score</th>
+                        <th class="py-3.5 px-4 text-center">Softmax \(P(S_i)\)</th>
+                        <th class="py-3.5 px-4 text-right">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60">
+                    {% for s in suppliers %}
+                    <tr class="hover:bg-slate-800/40 transition-colors">
+                        <td class="py-4 px-4 font-bold text-white flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-extrabold text-sm">
+                                {{ s.name|slice:":1" }}
+                            </div>
+                            <div>
+                                <span class="block">{{ s.name }}</span>
+                                <span class="text-[11px] text-slate-500 font-normal">{{ s.contact_email|default:'N/A' }}</span>
+                            </div>
+                        </td>
+
+                        <td class="py-4 px-4">
+                            <span class="bg-slate-800 text-slate-300 px-2.5 py-1 rounded border border-slate-700 font-medium">
+                                {{ s.category }}
+                            </span>
+                        </td>
+
+                        <td class="py-4 px-4 text-center font-mono text-slate-300">{{ s.tco_score }}</td>
+                        <td class="py-4 px-4 text-center font-mono text-slate-300">{{ s.delivery_score }}</td>
+                        <td class="py-4 px-4 text-center font-mono text-slate-300">{{ s.quality_score }}</td>
+                        <td class="py-4 px-4 text-center font-mono text-slate-300">{{ s.stability_score }}</td>
+                        <td class="py-4 px-4 text-center font-mono text-slate-300">{{ s.esg_score }}</td>
+
+                        <td class="py-4 px-4 text-center">
+                            <span class="text-sm font-extrabold text-emerald-400 font-mono">{{ s.weighted_score }}</span>
+                        </td>
+
+                        <td class="py-4 px-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <div class="w-24 bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                                    <div class="bg-gradient-to-r from-indigo-500 to-cyan-400 h-full rounded-full" style="width: {{ s.softmax_percentage }}%"></div>
+                                </div>
+                                <span class="font-extrabold text-indigo-400 font-mono text-xs">{{ s.softmax_percentage }}%</span>
+                            </div>
+                        </td>
+
+                        <td class="py-4 px-4 text-right">
+                            {% if s.status == 'preferred' %}
+                            <span class="bg-emerald-500/20 text-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/30">
+                                Preferred
+                            </span>
+                            {% elif s.status == 'active' %}
+                            <span class="bg-blue-500/20 text-blue-300 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-500/30">
+                                Active
+                            </span>
+                            {% else %}
+                            <span class="bg-amber-500/20 text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-500/30">
+                                Under Review
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="py-8 text-center text-slate-500">No suppliers registered in this category.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Supplier Modal -->
+<div id="add-supplier-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-cardbg border border-borderbg rounded-xl max-w-lg w-full p-6 space-y-6 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-borderbg pb-4">
+            <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                <i class="fa-solid fa-plus text-indigo-400"></i>
+                <span>Add Supplier to Evaluation Matrix</span>
+            </h3>
+            <button onclick="toggleAddSupplierModal()" class="text-slate-400 hover:text-white">&times;</button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Company Name</label>
+                    <input type="text" id="sup-name" placeholder="e.g. Apex Steel Ltd" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200 focus:border-indigo-500 focus:ring-0">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Category</label>
+                    <select id="sup-cat" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200 focus:border-indigo-500 focus:ring-0">
+                        <option value="Steel Rebar">Steel Rebar</option>
+                        <option value="Concrete">Concrete</option>
+                        <option value="Masonry">Masonry</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-slate-300 font-semibold mb-1">Contact Email</label>
+                <input type="email" id="sup-email" placeholder="vendor@company.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200 focus:border-indigo-500 focus:ring-0">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">TCO/ROI Score (30%)</label>
+                    <input type="number" id="sup-tco" value="85" min="0" max="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Delivery Score (25%)</label>
+                    <input type="number" id="sup-delivery" value="88" min="0" max="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Quality Score (20%)</label>
+                    <input type="number" id="sup-quality" value="90" min="0" max="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Stability Score (15%)</label>
+                    <input type="number" id="sup-stability" value="86" min="0" max="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-slate-300 font-semibold mb-1">ESG/Sustainability Score (10%)</label>
+                <input type="number" id="sup-esg" value="82" min="0" max="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-200">
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end space-x-3 pt-4 border-t border-borderbg">
+            <button onclick="toggleAddSupplierModal()" class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+            <button onclick="submitSupplier()" class="px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 shadow-md">Add & Calculate Matrix</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function toggleAddSupplierModal() {
+        const modal = document.getElementById('add-supplier-modal');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    async function submitSupplier() {
+        const name = document.getElementById('sup-name').value;
+        const category = document.getElementById('sup-cat').value;
+        const email = document.getElementById('sup-email').value;
+        const tco = parseFloat(document.getElementById('sup-tco').value);
+        const delivery = parseFloat(document.getElementById('sup-delivery').value);
+        const quality = parseFloat(document.getElementById('sup-quality').value);
+        const stability = parseFloat(document.getElementById('sup-stability').value);
+        const esg = parseFloat(document.getElementById('sup-esg').value);
+
+        if (!name) {
+            showToast('Supplier name is required.', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/suppliers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    category: category,
+                    contact_email: email,
+                    tco_score: tco,
+                    delivery_score: delivery,
+                    quality_score: quality,
+                    stability_score: stability,
+                    esg_score: esg
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                showToast(`Supplier '${name}' added to matrix!`, 'success');
+                toggleAddSupplierModal();
+                setTimeout(() => window.location.reload(), 800);
+            } else {
+                showToast('Failed to add supplier: ' + data.error, 'error');
+            }
+        } catch (err) {
+            showToast('Network error adding supplier.', 'error');
+        }
+    }
+</script>
+{% endblock %}

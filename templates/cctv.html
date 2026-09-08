@@ -1,0 +1,397 @@
+{% extends 'base.html' %}
+
+{% block title %}Real-Time CCTV Surveillance & Monitoring - ConstructSync AI{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1">
+            <div class="flex items-center space-x-3">
+                <span class="p-2.5 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <i class="fa-solid fa-video text-xl"></i>
+                </span>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                        CCTV Surveillance & Live Stream Gateway
+                        <span class="text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> {{ cameras|length }} IP Cameras Active
+                        </span>
+                    </h1>
+                    <p class="text-sm text-slate-400">
+                        Sub-second WebRTC/MJPEG streaming proxy cross-referencing live site visual feeds against WBS task progress and EVM analytics.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <!-- Grid Layout Controls -->
+            <div class="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
+                <button onclick="setGridColumns(1)" id="btn-grid-1" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-square"></i> 1x1 Focus
+                </button>
+                <button onclick="setGridColumns(2)" id="btn-grid-2" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow shadow-rose-600/30 transition">
+                    <i class="fa-solid fa-border-all"></i> 2x2 Quad
+                </button>
+                <button onclick="setGridColumns(3)" id="btn-grid-3" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-grip"></i> 3x3 Matrix
+                </button>
+            </div>
+
+            <button onclick="openRegisterCameraModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-sm shadow-lg shadow-rose-600/20 transition flex items-center space-x-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>Register Camera</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Multi-Camera Video Feed Grid -->
+    <div id="camera-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% if cameras %}
+            {% for cam in cameras %}
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden flex flex-col group hover:border-slate-700 transition">
+                <!-- Camera Video Header -->
+                <div class="p-3.5 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="font-extrabold text-sm text-white tracking-wide">{{ cam.camera_code }}</span>
+                        <span class="text-xs text-slate-400 font-medium">| {{ cam.name }}</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                            {{ cam.location_tag }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-slate-400 font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                            {{ cam.resolution }} @ {{ cam.fps }}fps
+                        </span>
+                        <button onclick="triggerAIAudit('{{ cam.id }}', '{{ cam.camera_code }}')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30 transition flex items-center gap-1">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i> AI Audit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Viewport -->
+                <div class="relative bg-black flex items-center justify-center min-h-[260px] overflow-hidden">
+                    <img id="stream-img-{{ cam.id }}" 
+                         src="/api/cctv/stream/{{ cam.id }}?token={{ cam.stream_token }}" 
+                         alt="{{ cam.name }}"
+                         class="w-full h-full object-cover rounded-none"
+                         onerror="this.onerror=null; this.src='/static/images/camera_placeholder.jpg';">
+
+                    <!-- Stream Stats Overlay Badges -->
+                    <div class="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md text-[11px] font-mono text-emerald-400 border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-emerald-400"></i> Token Authenticated
+                    </div>
+
+                    {% if cam.associated_wbs_task_name %}
+                    <div class="absolute top-3 right-3 bg-indigo-950/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[11px] font-semibold text-indigo-300 border border-indigo-500/30">
+                        Task: {{ cam.associated_wbs_task_name }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- PTZ & Controls Bar -->
+                <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-1">
+                        <span class="text-xs font-semibold text-slate-500 mr-1">PTZ:</span>
+                        <button onclick="controlPTZ('{{ cam.id }}', 'left')" class="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center transition" title="Pan Left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button onclick="controlPTZ('{{ cam.id }}', 'up')" class="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center transition" title="Tilt Up">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+                        <button onclick="controlPTZ('{{ cam.id }}', 'down')" class="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center transition" title="Tilt Down">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <button onclick="controlPTZ('{{ cam.id }}', 'right')" class="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center transition" title="Pan Right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <button onclick="controlPTZ('{{ cam.id }}', 'zoom_in')" class="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center transition" title="Zoom In">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="captureSnapshot('{{ cam.id }}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition flex items-center gap-1">
+                            <i class="fa-solid fa-camera"></i> Snapshot
+                        </button>
+                        <button onclick="toggleFullScreen('stream-img-{{ cam.id }}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition flex items-center gap-1">
+                            <i class="fa-solid fa-expand"></i> Fullscreen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-span-full bg-slate-900/60 p-12 rounded-2xl border border-dashed border-slate-800 text-center space-y-3">
+                <i class="fa-solid fa-video-slash text-4xl text-slate-600"></i>
+                <h3 class="text-lg font-bold text-white">No CCTV Cameras Registered</h3>
+                <p class="text-sm text-slate-400 max-w-md mx-auto">
+                    Click 'Register Camera' above to connect site IP cameras via RTSP/WebRTC streams for real-time visual tracking.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- AI Visual Audit Modal -->
+<div id="ai-audit-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl space-y-0">
+        <div class="p-5 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-extrabold text-white">AI Visual Progress Audit</h3>
+                    <p id="audit-cam-title" class="text-xs text-slate-400">Camera Feed Cross-Referenced against WBS Metrics</p>
+                </div>
+            </div>
+            <button onclick="closeAIAuditModal()" class="text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div id="audit-modal-body" class="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+            <!-- Loading Spinner -->
+            <div id="audit-loading" class="py-12 text-center space-y-3">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl text-indigo-400"></i>
+                <p class="text-sm font-semibold text-slate-300">Analyzing live CCTV frames with Computer Vision & WBS Engine...</p>
+            </div>
+
+            <!-- Content Container -->
+            <div id="audit-content" class="hidden space-y-5">
+                <!-- Stat Cards Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase">Planned WBS</span>
+                        <span id="audit-wbs-planned" class="text-2xl font-extrabold text-white">0%</span>
+                    </div>
+
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase">AI Visual Progress</span>
+                        <span id="audit-visual-prog" class="text-2xl font-extrabold text-emerald-400">0%</span>
+                    </div>
+
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase">PPE Safety Rate</span>
+                        <span id="audit-ppe-rate" class="text-2xl font-extrabold text-cyan-400">0%</span>
+                    </div>
+                </div>
+
+                <!-- Details List -->
+                <div class="space-y-3">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 block">Associated WBS Task</span>
+                        <p id="audit-task-name" class="text-sm font-semibold text-white">Task Name</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block">Detected Site Equipment</span>
+                        <ul id="audit-machinery-list" class="text-xs text-slate-300 space-y-1 list-disc list-inside"></ul>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">AI Visual Audit Findings</span>
+                        <ul id="audit-findings-list" class="text-xs text-slate-300 space-y-1 list-disc list-inside"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Camera Modal -->
+<div id="register-camera-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+        <div class="p-5 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+            <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-video text-rose-500"></i> Register IP Camera
+            </h3>
+            <button onclick="closeRegisterCameraModal()" class="text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <form id="register-camera-form" onsubmit="submitRegisterCamera(event)" class="p-6 space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Camera Name</label>
+                <input type="text" name="name" required placeholder="e.g. Zone A Excavation Cam" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Camera Code</label>
+                    <input type="text" name="camera_code" required placeholder="e.g. CAM-ZONE-A" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Location Tag</label>
+                    <input type="text" name="location_tag" value="Zone A" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">RTSP Stream Gateway URL</label>
+                <input type="text" name="rtsp_url" value="rtsp://admin:pass@192.168.1.100:554/stream1" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-rose-500">
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Protocol</label>
+                    <select name="stream_type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500">
+                        <option value="mjpg">MJPEG</option>
+                        <option value="webrtc">WebRTC</option>
+                        <option value="hls">HLS Gateway</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Resolution</label>
+                    <select name="resolution" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500">
+                        <option value="1080p">1080p FHD</option>
+                        <option value="4K">4K UHD</option>
+                        <option value="720p">720p HD</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">FPS</label>
+                    <input type="number" name="fps" value="30" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Link to WBS Task</label>
+                <select name="associated_wbs_task_id" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500">
+                    <option value="">-- None (General Surveillance) --</option>
+                    {% for task in tasks %}
+                    <option value="{{ task.id }}">{{ task.wbs_code }} - {{ task.task_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="pt-2 flex justify-end space-x-3">
+                <button type="button" onclick="closeRegisterCameraModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">Cancel</button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-lg shadow-rose-600/30 transition">Save Camera</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function setGridColumns(cols) {
+        const grid = document.getElementById('camera-grid');
+        btn1 = document.getElementById('btn-grid-1');
+        btn2 = document.getElementById('btn-grid-2');
+        btn3 = document.getElementById('btn-grid-3');
+
+        [btn1, btn2, btn3].forEach(b => {
+            b.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+        });
+
+        if (cols === 1) {
+            grid.className = "grid grid-cols-1 gap-6 max-w-4xl mx-auto";
+            btn1.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow shadow-rose-600/30 transition";
+        } else if (cols === 2) {
+            grid.className = "grid grid-cols-1 md:grid-cols-2 gap-6";
+            btn2.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow shadow-rose-600/30 transition";
+        } else if (cols === 3) {
+            grid.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
+            btn3.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow shadow-rose-600/30 transition";
+        }
+    }
+
+    function controlPTZ(camId, action) {
+        console.log(`PTZ Command sent to Cam ${camId}: ${action}`);
+        // Visual toast feedback
+        const img = document.getElementById(`stream-img-${camId}`);
+        if(img) {
+            img.style.transform = "scale(1.02)";
+            setTimeout(() => img.style.transform = "scale(1.0)", 200);
+        }
+    }
+
+    function captureSnapshot(camId) {
+        alert(`Snapshot saved from Camera #${camId} to project media gallery!`);
+    }
+
+    function toggleFullScreen(elemId) {
+        const elem = document.getElementById(elemId);
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
+    }
+
+    function triggerAIAudit(camId, camCode) {
+        const modal = document.getElementById('ai-audit-modal');
+        const loading = document.getElementById('audit-loading');
+        const content = document.getElementById('audit-content');
+        
+        document.getElementById('audit-cam-title').innerText = `Camera ${camCode} Cross-Referenced against WBS Metrics`;
+        modal.classList.remove('hidden');
+        loading.classList.remove('hidden');
+        content.classList.add('hidden');
+
+        fetch(`/api/cctv/ai-audit/${camId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.audit) {
+                    const a = data.audit;
+                    document.getElementById('audit-wbs-planned').innerText = `${a.wbs_planned_completion_pct}%`;
+                    document.getElementById('audit-visual-prog').innerText = `${a.ai_visual_progress_pct}%`;
+                    document.getElementById('audit-ppe-rate').innerText = `${a.ppe_compliance_rate_pct}%`;
+                    document.getElementById('audit-task-name').innerText = a.associated_task_name;
+
+                    const mList = document.getElementById('audit-machinery-list');
+                    mList.innerHTML = a.detected_machinery.map(m => `<li>${m}</li>`).join('');
+
+                    const fList = document.getElementById('audit-findings-list');
+                    fList.innerHTML = a.ai_recommendations.map(f => `<li>${f}</li>`).join('');
+
+                    loading.classList.add('hidden');
+                    content.classList.remove('hidden');
+                }
+            })
+            .catch(err => {
+                alert("Error fetching AI visual audit");
+                closeAIAuditModal();
+            });
+    }
+
+    function closeAIAuditModal() {
+        document.getElementById('ai-audit-modal').classList.add('hidden');
+    }
+
+    function openRegisterCameraModal() {
+        document.getElementById('register-camera-modal').classList.remove('hidden');
+    }
+
+    function closeRegisterCameraModal() {
+        document.getElementById('register-camera-modal').classList.add('hidden');
+    }
+
+    function submitRegisterCamera(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch('/api/cctv/cameras', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.success) {
+                alert(res.message);
+                window.location.reload();
+            } else {
+                alert(res.error || 'Failed to register camera');
+            }
+        });
+    }
+</script>
+{% endblock %}

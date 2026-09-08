@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Visual Pipeline & Flowchart Workflow - ConstructFlow AI{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="flex items-center space-x-3 mb-1">
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+                    <i class="fa-solid fa-sitemap text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-black text-white tracking-tight">Interactive Visual Pipeline & Flowchart Workflow</h1>
+                <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Add-On 5</span>
+            </div>
+            <p class="text-sm text-slate-400">Step-by-step construction phase graph with real-time status binding and 3-Day Fail-Safe re-routing arrows.</p>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button onclick="triggerFailsafeReorg()" class="px-3.5 py-2 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-bold transition flex items-center space-x-2">
+                <i class="fa-solid fa-bolt text-rose-400"></i>
+                <span>Test Fail-Safe Re-Routing</span>
+            </button>
+            <button onclick="refreshFlowchart()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold border border-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span>Refresh Flowchart</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary KPI Bar -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+        <div class="bg-cardbg border border-borderbg rounded-xl p-4">
+            <span class="text-xs text-slate-400 block font-medium">Total Phases</span>
+            <span class="text-2xl font-extrabold text-white mt-1 block">{{ flowchart.summary.total_phases|default:6 }}</span>
+        </div>
+        <div class="bg-cardbg border border-borderbg rounded-xl p-4">
+            <span class="text-xs text-slate-400 block font-medium">Completed Phases</span>
+            <span class="text-2xl font-extrabold text-emerald-400 mt-1 block">{{ flowchart.summary.completed_phases|default:0 }}</span>
+        </div>
+        <div class="bg-cardbg border border-borderbg rounded-xl p-4">
+            <span class="text-xs text-slate-400 block font-medium">In-Progress Phases</span>
+            <span class="text-2xl font-extrabold text-amber-400 mt-1 block">{{ flowchart.summary.in_progress_phases|default:0 }}</span>
+        </div>
+        <div class="bg-cardbg border border-borderbg rounded-xl p-4">
+            <span class="text-xs text-slate-400 block font-medium">Fail-Safe Re-Routes</span>
+            <span class="text-2xl font-extrabold {% if flowchart.summary.failsafe_rerouted %}text-rose-400 animate-pulse{% else %}text-slate-400{% endif %} mt-1 block">
+                {% if flowchart.summary.failsafe_rerouted %}{{ flowchart.summary.crashed_phases }} ACTIVE{% else %}NONE{% endif %}
+            </span>
+        </div>
+        <div class="bg-cardbg border border-borderbg rounded-xl p-4">
+            <span class="text-xs text-slate-400 block font-medium">Overall Construction Progress</span>
+            <span class="text-2xl font-extrabold text-cyan-400 font-mono mt-1 block">{{ flowchart.summary.overall_progress|default:0 }}%</span>
+        </div>
+    </div>
+
+    {% if not flowchart.enabled %}
+    <div class="bg-cardbg border border-rose-500/30 rounded-2xl p-8 text-center text-slate-300">
+        <i class="fa-solid fa-power-off text-3xl text-rose-500 mb-3"></i>
+        <h3 class="text-lg font-bold text-white">Visual Flowchart Workflow Add-On is Disabled</h3>
+        <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Enable Add-On 5 in the Project Settings Control Panel to render step-by-step flowchart nodes and real-time fail-safe re-routing arrows.</p>
+        <a href="/addons" class="inline-block mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition">Open Add-On Manager &rarr;</a>
+    </div>
+    {% else %}
+
+    <!-- Visual Pipeline Canvas -->
+    <div class="bg-cardbg border border-borderbg rounded-2xl p-6 shadow-xl relative overflow-x-auto">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-borderbg">
+            <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project text-cyan-400"></i>
+                <span>Sequential Construction Flowchart & Phase Pipeline</span>
+            </h3>
+            <div class="flex items-center space-x-4 text-xs font-medium text-slate-400">
+                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span>Completed</span></span>
+                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span> <span>In-Progress</span></span>
+                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> <span>Pending</span></span>
+                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> <span>Fail-Safe Crashed (-3d)</span></span>
+            </div>
+        </div>
+
+        <!-- Node Pipeline Grid -->
+        <div class="min-w-[900px] py-4 px-2">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 relative">
+                {% for node in flowchart.nodes %}
+                <div class="flex flex-col items-center">
+                    <!-- Flowchart Card Node -->
+                    <div id="node-{{ node.id }}" class="w-full bg-slate-900/90 rounded-2xl border-2 p-4 transition-all duration-300 relative shadow-lg group hover:-translate-y-1 {% if node.status == 'completed' %}border-emerald-500/80 shadow-emerald-500/10{% elif node.status == 'critical_crashed' %}border-rose-500/90 shadow-rose-500/20 ring-2 ring-rose-500/30{% elif node.status == 'in_progress' %}border-amber-500/80 shadow-amber-500/10{% else %}border-slate-800 opacity-75{% endif %}">
+                        
+                        <!-- Step Badge -->
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-7 h-7 rounded-full text-xs font-extrabold flex items-center justify-center {% if node.status == 'completed' %}bg-emerald-500 text-slate-950{% elif node.status == 'critical_crashed' %}bg-rose-500 text-white animate-pulse{% elif node.status == 'in_progress' %}bg-amber-500 text-slate-950{% else %}bg-slate-800 text-slate-400{% endif %}">
+                                {{ node.step_number }}
+                            </span>
+                            
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase {% if node.status == 'completed' %}bg-emerald-500/20 text-emerald-400 border-emerald-500/30{% elif node.status == 'critical_crashed' %}bg-rose-500/20 text-rose-300 border-rose-500/40{% elif node.status == 'in_progress' %}bg-amber-500/20 text-amber-300 border-amber-500/30{% else %}bg-slate-800 text-slate-400 border-slate-700{% endif %}">
+                                {% if node.status == 'critical_crashed' %}Crashed (-3d){% else %}{{ node.status }}{% endif %}
+                            </span>
+                        </div>
+
+                        <!-- Phase Icon & Title -->
+                        <div class="flex items-center space-x-2.5 mb-2">
+                            <i class="fa-solid fa-{{ node.icon }} text-lg {% if node.status == 'completed' %}text-emerald-400{% elif node.status == 'critical_crashed' %}text-rose-400{% elif node.status == 'in_progress' %}text-amber-400{% else %}text-slate-500{% endif %}"></i>
+                            <h4 class="text-xs font-bold text-white tracking-tight leading-snug">{{ node.title }}</h4>
+                        </div>
+
+                        <!-- Fail-Safe Re-Routed Warning Tag -->
+                        {% if node.is_crashed %}
+                        <div class="my-2 p-2 bg-rose-500/20 border border-rose-500/40 rounded-lg text-[10px] text-rose-300 leading-tight">
+                            <i class="fa-solid fa-bolt text-rose-400 mr-1"></i>
+                            <strong>3-Day Fail-Safe Active!</strong>
+                            <span class="block text-slate-300 mt-0.5">Recovered: <strong>+{{ node.crashed_info.days_crashed }}d</strong> (End: {{ node.crashed_info.new_planned_end_date|default:'Enforced' }})</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Progress Bar -->
+                        <div class="mt-3">
+                            <div class="flex justify-between items-center text-[10px] text-slate-400 mb-1 font-mono">
+                                <span>Phase Progress</span>
+                                <span class="font-bold text-white">{{ node.progress_pct }}%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full transition-all duration-500 {% if node.status == 'completed' %}bg-emerald-500{% elif node.status == 'critical_crashed' %}bg-gradient-to-r from-rose-500 to-amber-500{% elif node.status == 'in_progress' %}bg-amber-500{% else %}bg-slate-700{% endif %}" style="width: {{ node.progress_pct }}%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Associated Tasks Breakdown -->
+                        <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
+                            <span>Tasks: <strong>{{ node.task_count }}</strong></span>
+                            <button onclick="toggleNodeTasks('{{ node.id }}')" class="text-cyan-400 hover:text-cyan-300 font-semibold underline">Details</button>
+                        </div>
+
+                        <!-- Task Details Accordion -->
+                        <div id="details-{{ node.id }}" class="hidden mt-3 pt-2 border-t border-slate-800 text-[10px] space-y-1.5 text-left text-slate-300">
+                            {% for t in node.tasks %}
+                            <div class="p-1.5 bg-slate-950/80 rounded border border-slate-800">
+                                <span class="font-mono text-orange-400 font-bold">{{ t.wbs_code }}</span> {{ t.task_name }}
+                                <span class="block text-[9px] text-slate-400 mt-0.5">Qty: {{ t.actual_quantity }}/{{ t.planned_quantity }} {{ t.unit }} ({{ t.completion_percentage }}%)</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function toggleNodeTasks(nodeId) {
+    const el = document.getElementById(`details-${nodeId}`);
+    if (el) {
+        el.classList.toggle('hidden');
+    }
+}
+
+async function refreshFlowchart() {
+    try {
+        const res = await fetch('/api/flowchart/rebuild', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showToast("Flowchart workflow pipeline updated!", "success");
+            setTimeout(() => location.reload(), 800);
+        }
+    } catch (e) {
+        showToast("Error refreshing flowchart.", "error");
+    }
+}
+
+async function triggerFailsafeReorg() {
+    if (!confirm('Execute 3-Day Early Deadline Fail-Safe Re-Organization? The flowchart will dynamically update crashed nodes and fast-track arrows.')) return;
+    try {
+        const res = await fetch('/api/addons/failsafe-reorg', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ force: true })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showToast(data.reorg.message, "success");
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            showToast("Fail-safe error: " + data.error, "error");
+        }
+    } catch (e) {
+        showToast("Request error executing fail-safe.", "error");
+    }
+}
+</script>
+{% endblock %}

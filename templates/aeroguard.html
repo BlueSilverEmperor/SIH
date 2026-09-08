@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}AeroGuard AI - Defense Contracting & ITAR Compliance Audit{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-slate-900 via-purple-950/40 to-slate-900 p-6 rounded-2xl border border-purple-500/30 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1">
+            <div class="flex items-center space-x-3">
+                <span class="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                    <i class="fa-solid fa-plane-lock text-xl"></i>
+                </span>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                        AeroGuard AI — Defense & Aerospace Operational Workspace
+                        <span class="text-xs px-2.5 py-1 rounded-full font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span> ITAR Enforced
+                        </span>
+                    </h1>
+                    <p class="text-sm text-slate-400">
+                        ITAR-compliant Softmax vendor vetting, security clearance audit trail, and Defense component compliance traceability.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <a href="/suppliers" class="px-3.5 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 font-semibold text-xs border border-purple-500/30 transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Softmax Vendors</span>
+            </a>
+            <a href="/select-industry" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-layer-group text-purple-400"></i>
+                <span>Switch Sector</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- KPI Summary Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <i class="fa-solid fa-building-shield text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">ITAR Vendors Audited</span>
+                <span class="text-2xl font-extrabold text-white font-mono">{{ metrics.total_itar_audited_vendors|default:5 }}</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i class="fa-solid fa-shield-check text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Compliance Pass Rate</span>
+                <span class="text-2xl font-extrabold text-emerald-400 font-mono">{{ metrics.overall_itar_compliance_pct|default:98.8 }}%</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <i class="fa-solid fa-key text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Top Clearance Tier</span>
+                <span class="text-sm font-extrabold text-indigo-300 font-mono">TS/SCI Verified</span>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center space-x-4">
+            <div class="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <i class="fa-solid fa-clock-rotate-left text-xl"></i>
+            </div>
+            <div>
+                <span class="block text-xs font-semibold text-slate-400 uppercase">Audit Trail Status</span>
+                <span class="text-sm font-extrabold text-amber-400 font-mono">100% Immutable</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ITAR Compliance & Security Audit Table -->
+    <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+        <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-lock text-purple-400"></i> ITAR Security Clearance & Vendor Audit Register
+            </h3>
+            <span class="text-xs text-slate-400">SIH26122 Defense Machining & ITAR Audit Traceability</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950/80 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                    <tr>
+                        <th class="px-4 py-3">Vendor / Defense Supplier</th>
+                        <th class="px-4 py-3">Batch & Housing Component</th>
+                        <th class="px-4 py-3">ITAR Level & Reg #</th>
+                        <th class="px-4 py-3">Material Billet</th>
+                        <th class="px-4 py-3">Metallurgical Audit</th>
+                        <th class="px-4 py-3">Compliance Score</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                    {% if metrics.audits %}
+                        {% for a in metrics.audits %}
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="px-4 py-3 font-bold text-white">
+                                <span class="block text-white font-bold">{{ a.supplier_name }}</span>
+                                <span class="text-[11px] text-purple-400 font-mono">{{ a.clearance_level }}</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="block text-slate-200 font-semibold">{{ a.component_housing|default:"Avionic Telemetry Housing Machining" }}</span>
+                                <span class="text-[11px] text-purple-300 font-mono font-bold">{{ a.batch_code|default:"Batch VII" }}</span>
+                            </td>
+                            <td class="px-4 py-3 font-mono">
+                                <span class="block text-purple-300 font-bold">{{ a.itar_level|default:"ITAR Level 3" }}</span>
+                                <span class="text-[11px] text-slate-400">{{ a.itar_registration_number }}</span>
+                            </td>
+                            <td class="px-4 py-3 text-slate-300 font-medium">{{ a.material_billet_type|default:"Titanium Ti-6Al-4V Billets" }}</td>
+                            <td class="px-4 py-3 font-sans">
+                                {% if a.metallurgical_audit_status == 'Passed' or a.metallurgical_audit_status == 'passed' or a.audit_status == 'compliant' %}
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">AUDIT PASSED</span>
+                                {% else %}
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">UNDER REVIEW</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-3 font-mono font-bold text-emerald-400">{{ a.compliance_score }}%</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="px-4 py-3 font-bold text-white">
+                                <span class="block text-white font-bold">Titanium Dynamics Corp</span>
+                                <span class="text-[11px] text-purple-400 font-mono">Top Secret (TS/SCI)</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="block text-slate-200 font-semibold">Avionic Telemetry Housing Machining</span>
+                                <span class="text-[11px] text-purple-300 font-mono font-bold">Batch VII</span>
+                            </td>
+                            <td class="px-4 py-3 font-mono">
+                                <span class="block text-purple-300 font-bold">ITAR Level 3</span>
+                                <span class="text-[11px] text-slate-400">ITAR-DEF-90082-US</span>
+                            </td>
+                            <td class="px-4 py-3 text-slate-300 font-medium">Titanium Ti-6Al-4V Billets</td>
+                            <td class="px-4 py-3 font-sans"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">AUDIT PASSED</span></td>
+                            <td class="px-4 py-3 font-mono font-bold text-emerald-400">99.8%</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

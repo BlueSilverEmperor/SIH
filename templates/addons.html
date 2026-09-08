@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+
+{% block title %}Modular Add-On Features Engine - ConstructFlow AI{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-emerald-950/60 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="flex items-center space-x-3 mb-1">
+                <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+                    <i class="fa-solid fa-puzzle-piece text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-black text-white tracking-tight">Modular Add-On Features Engine</h1>
+                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Plug-and-Play</span>
+            </div>
+            <p class="text-sm text-slate-400">Dynamically toggle advanced engines per project without disrupting core WBS workflows.</p>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <span class="text-xs text-slate-400 font-medium">Active Workspace: <strong class="text-orange-400">{{ current_project.name }}</strong></span>
+            <button onclick="refreshAddonStatus()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold border border-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span>Refresh Status</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add-Ons Control Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for addon in addon_list %}
+        <div id="addon-card-{{ addon.key }}" class="bg-cardbg rounded-2xl border border-borderbg p-6 flex flex-col justify-between transition-all hover:border-slate-700 shadow-lg">
+            <div>
+                <!-- Top Card Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl {% if addon.key == 'supplier_softmax_engine' %}bg-indigo-500/20 text-indigo-400 border border-indigo-500/30{% elif addon.key == 'blender_3d_generator' %}bg-cyan-500/20 text-cyan-400 border border-cyan-500/30{% elif addon.key == 'daily_progress_audit' %}bg-amber-500/20 text-amber-400 border border-amber-500/30{% else %}bg-rose-500/20 text-rose-400 border border-rose-500/30{% endif %} flex items-center justify-center">
+                            <i class="fa-solid {% if addon.icon == 'truck' %}fa-truck-fast{% elif addon.icon == 'box' %}fa-cube{% elif addon.icon == 'clock' %}fa-clock-rotate-left{% else %}fa-shield-halved{% endif %} text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-white">{{ addon.name }}</h3>
+                            <span class="text-[11px] font-mono text-slate-400">ID: {{ addon.key }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Tailwind Toggle Switch -->
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-{{ addon.key }}" onchange="toggleAddOn('{{ addon.key }}')" {% if addon.is_enabled %}checked{% endif %} class="sr-only peer">
+                        <div class="w-12 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-slate-300 after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                    </label>
+                </div>
+
+                <p class="text-xs text-slate-300 leading-relaxed mb-4">{{ addon.description }}</p>
+
+                <!-- Status Badge -->
+                <div class="flex items-center justify-between text-xs pt-3 border-t border-slate-800/80">
+                    <span class="text-slate-400 font-medium">Status:</span>
+                    <span id="badge-{{ addon.key }}" class="font-bold px-2.5 py-1 rounded-full border text-xs {% if addon.is_enabled %}bg-emerald-500/10 text-emerald-400 border-emerald-500/30{% else %}bg-slate-800 text-slate-400 border-slate-700{% endif %}">
+                        {% if addon.is_enabled %}<i class="fa-solid fa-check-circle mr-1"></i> Active Plug-in{% else %}<i class="fa-solid fa-power-off mr-1"></i> Disabled{% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Action / Custom Widget Button -->
+            <div class="mt-4">
+                {% if addon.key == 'early_deadline_failsafe' %}
+                <button onclick="triggerFailsafeReorg()" class="w-full py-2 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-bolt text-rose-400"></i>
+                    <span>Execute 3-Day Fail-Safe Re-Org</span>
+                </button>
+                {% elif addon.key == 'daily_progress_audit' %}
+                <button onclick="triggerDailyAudit()" class="w-full py-2 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-clipboard-check text-amber-400"></i>
+                    <span>Run Daily Progress Audit</span>
+                </button>
+                {% elif addon.key == 'weather_risk_hedging' %}
+                <button onclick="triggerWeatherHedging()" class="w-full py-2 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-cloud-sun-rain text-cyan-400"></i>
+                    <span>Evaluate Weather Risk & Hedge Schedule</span>
+                </button>
+                {% elif addon.key == 'ar_bim_overlay' %}
+                <a href="/blueprint-3d" class="block w-full text-center py-2 bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-glasses mr-1"></i> Open AR BIM Overlay Viewport
+                </a>
+                {% elif addon.key == 'voice_field_logging' %}
+                <a href="/ingestion" class="block w-full text-center py-2 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-microphone mr-1"></i> Open Voice Logging Dictation
+                </a>
+                {% elif addon.key == 'geofenced_qr_attendance' %}
+                <a href="/companion" class="block w-full text-center py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-mobile-screen-button mr-1"></i> Launch Geofenced Companion
+                </a>
+                {% elif addon.key == 'blender_3d_generator' %}
+                <a href="/blueprint-3d" class="block w-full text-center py-2 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-cube mr-1"></i> Open 3D Viewer
+                </a>
+                {% elif addon.key == 'supplier_softmax_engine' %}
+                <a href="/suppliers" class="block w-full text-center py-2 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-truck-field mr-1"></i> View Supplier Matrix
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Live Add-On Diagnostics & Logs Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Daily Progress Audit Widget -->
+        <div class="bg-cardbg rounded-2xl border border-borderbg p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-4 border-b border-borderbg pb-3">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-clock-rotate-left text-amber-400 text-lg"></i>
+                    <h2 class="text-base font-bold text-white">Daily Progress Audit Pipeline</h2>
+                </div>
+                <span class="text-xs text-slate-400">Add-On 3 Status</span>
+            </div>
+
+            {% if daily_audit.enabled %}
+            <div class="space-y-4">
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[11px] text-slate-400 block font-medium">Planned Velocity</span>
+                        <span class="text-base font-extrabold text-slate-200">{{ daily_audit.planned_velocity }} <span class="text-xs text-slate-400">u/d</span></span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[11px] text-slate-400 block font-medium">Actual Field Velocity</span>
+                        <span class="text-base font-extrabold text-amber-400">{{ daily_audit.actual_velocity }} <span class="text-xs text-slate-400">u/d</span></span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[11px] text-slate-400 block font-medium">Audit Status</span>
+                        <span class="text-xs font-bold uppercase px-2 py-0.5 rounded-md inline-block mt-1 {% if daily_audit.audit_status == 'on_track' %}bg-emerald-500/20 text-emerald-400{% elif daily_audit.audit_status == 'minor_delay' %}bg-amber-500/20 text-amber-400{% else %}bg-rose-500/20 text-rose-400{% endif %}">
+                            {{ daily_audit.audit_status }}
+                        </span>
+                    </div>
+                </div>
+                <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-xs text-slate-300">
+                    <i class="fa-solid fa-info-circle text-amber-400 mr-1.5"></i>
+                    <span>{{ daily_audit.notes }}</span>
+                </div>
+            </div>
+            {% else %}
+            <div class="p-8 text-center bg-slate-900/40 rounded-xl border border-slate-800/80 text-slate-400 text-xs">
+                <i class="fa-solid fa-power-off text-2xl text-slate-500 mb-2"></i>
+                <p>Daily Progress Audit Add-On is currently <strong>disabled</strong>.</p>
+                <p class="text-slate-500 mt-1">Enable Add-On 3 above to start recording daily velocity variance audits.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 3-Day Fail-Safe Re-Organization Logs Widget -->
+        <div class="bg-cardbg rounded-2xl border border-borderbg p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-4 border-b border-borderbg pb-3">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-shield-halved text-rose-400 text-lg"></i>
+                    <h2 class="text-base font-bold text-white">3-Day Early Deadline Fail-Safe Log</h2>
+                </div>
+                <span class="text-xs text-slate-400">Add-On 4 Status</span>
+            </div>
+
+            <div class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                {% if failsafe_logs %}
+                    {% for log in failsafe_logs %}
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-rose-500/20 space-y-1.5 text-xs">
+                        <div class="flex justify-between items-center text-slate-300 font-semibold">
+                            <span class="text-rose-400"><i class="fa-solid fa-bolt mr-1"></i> Re-Org Executed</span>
+                            <span class="text-slate-400 text-[10px]">{{ log.trigger_date }}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-slate-400 text-[11px]">
+                            <div>Target End Date: <strong class="text-slate-200">{{ log.target_end_date }}</strong></div>
+                            <div>Enforced (-3d): <strong class="text-emerald-400">{{ log.enforced_deadline }}</strong></div>
+                        </div>
+                        <div class="flex justify-between items-center pt-1 border-t border-slate-800 text-[11px]">
+                            <span class="text-amber-400 font-medium">Days Recovered: <strong>{{ log.days_saved }}d</strong></span>
+                            <span class="text-cyan-400 font-medium">Crashed Tasks: <strong>{{ log.crashed_tasks_count }}</strong></span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-8 text-center bg-slate-900/40 rounded-xl border border-slate-800/80 text-slate-400 text-xs">
+                        <i class="fa-solid fa-shield-check text-2xl text-emerald-400 mb-2"></i>
+                        <p>No fail-safe emergency re-organizations triggered yet.</p>
+                        <p class="text-slate-500 mt-1">If schedule slips past 3-day deadline buffer, the fail-safe automatically crashes critical path tasks.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function toggleAddOn(addonKey) {
+    const isChecked = document.getElementById(`toggle-${addonKey}`).checked;
+    try {
+        const res = await fetch('/api/addons/toggle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ addon_key: addonKey, is_enabled: isChecked })
+        });
+        const data = await res.json();
+        if (data.success) {
+            updateBadge(addonKey, isChecked);
+        } else {
+            alert('Failed to toggle add-on: ' + data.error);
+            document.getElementById(`toggle-${addonKey}`).checked = !isChecked;
+        }
+    } catch (err) {
+        alert('Connection error toggling add-on.');
+        document.getElementById(`toggle-${addonKey}`).checked = !isChecked;
+    }
+}
+
+function updateBadge(addonKey, isEnabled) {
+    const badge = document.getElementById(`badge-${addonKey}`);
+    if (isEnabled) {
+        badge.className = 'font-bold px-2.5 py-1 rounded-full border text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        badge.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> Active Plug-in';
+    } else {
+        badge.className = 'font-bold px-2.5 py-1 rounded-full border text-xs bg-slate-800 text-slate-400 border-slate-700';
+        badge.innerHTML = '<i class="fa-solid fa-power-off mr-1"></i> Disabled';
+    }
+}
+
+async function triggerDailyAudit() {
+    try {
+        const res = await fetch('/api/addons/daily-audit');
+        const data = await res.json();
+        if (data.success) {
+            alert(`Daily Audit Complete!\nStatus: ${data.audit.audit_status}\nVelocity: ${data.audit.actual_velocity} u/d`);
+            location.reload();
+        } else {
+            alert('Audit error: ' + (data.audit?.message || data.error));
+        }
+    } catch (e) {
+        alert('Daily audit request failed.');
+    }
+}
+
+async function triggerFailsafeReorg() {
+    if (!confirm('Execute 3-Day Early Deadline Fail-Safe Re-Organization? This will crash critical path task schedules to ensure completion 3 days early.')) return;
+    try {
+        const res = await fetch('/api/addons/failsafe-reorg', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ force: true })
+        });
+        const data = await res.json();
+        if (data.success) {
+            alert(data.reorg.message);
+            location.reload();
+        } else {
+            alert('Fail-Safe trigger error: ' + (data.reorg?.message || data.error));
+        }
+    } catch (e) {
+        alert('Fail-Safe execution request failed.');
+    }
+}
+
+async function triggerWeatherHedging() {
+    try {
+        const res = await fetch('/api/addons/weather-hedging', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.enabled) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert('Weather Hedging Error: ' + (data.message || 'Add-on disabled.'));
+        }
+    } catch (e) {
+        alert('Weather hedging request failed.');
+    }
+}
+
+function refreshAddonStatus() {
+    location.reload();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+
+{% block title %}Executive Dashboard - ConstructSync AI{% endblock %}
+{% block page_title %}Executive EVM Dashboard{% endblock %}
+
+{% block content %}
+<!-- Project Overview Header Card -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+    <div>
+        <div class="flex items-center space-x-3">
+            <h2 class="text-2xl font-extrabold text-white tracking-tight">{{ project.name }}</h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                {{ project.status }}
+            </span>
+        </div>
+        <p class="text-sm text-slate-400 mt-1 max-w-3xl">{{ project.description }}</p>
+    </div>
+    <div class="flex items-center space-x-6 text-sm border-t lg:border-t-0 lg:border-l border-borderbg pt-4 lg:pt-0 lg:pl-6">
+        <div>
+            <span class="block text-xs font-medium text-slate-500 uppercase">Total Target Budget</span>
+            <span class="text-xl font-bold text-slate-100 font-mono">${{ project.total_budget|currency:2 }}</span>
+        </div>
+        <div>
+            <span class="block text-xs font-medium text-slate-500 uppercase">Target Completion</span>
+            <span class="text-sm font-semibold text-slate-300 font-mono">{{ project.target_end_date|default:'Dec 30, 2026' }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Modular Add-On Quick Control Bar -->
+<div class="bg-cardbg border border-emerald-500/20 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-puzzle-piece text-sm"></i>
+        </div>
+        <div>
+            <span class="font-bold text-sm text-white">Modular Add-On Features Engine</span>
+            <span class="block text-[11px] text-slate-400">Plug-and-play add-on toggles for active workspace</span>
+        </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center space-x-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+            <span class="text-indigo-400 font-semibold"><i class="fa-solid fa-truck-fast mr-1"></i>Supplier Softmax:</span>
+            <span class="font-bold {% if addons.supplier_softmax_engine %}text-emerald-400{% else %}text-slate-500{% endif %}">{% if addons.supplier_softmax_engine %}ON{% else %}OFF{% endif %}</span>
+        </div>
+        <div class="flex items-center space-x-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+            <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-cube mr-1"></i>3D Generator:</span>
+            <span class="font-bold {% if addons.blender_3d_generator %}text-emerald-400{% else %}text-slate-500{% endif %}">{% if addons.blender_3d_generator %}ON{% else %}OFF{% endif %}</span>
+        </div>
+        <div class="flex items-center space-x-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+            <span class="text-amber-400 font-semibold"><i class="fa-solid fa-clock mr-1"></i>Daily Audit:</span>
+            <span class="font-bold {% if addons.daily_progress_audit %}text-emerald-400{% else %}text-slate-500{% endif %}">{% if addons.daily_progress_audit %}ON{% else %}OFF{% endif %}</span>
+        </div>
+        <div class="flex items-center space-x-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+            <span class="text-rose-400 font-semibold"><i class="fa-solid fa-shield-halved mr-1"></i>3-Day Fail-Safe:</span>
+            <span class="font-bold {% if addons.early_deadline_failsafe %}text-emerald-400{% else %}text-slate-500{% endif %}">{% if addons.early_deadline_failsafe %}ON{% else %}OFF{% endif %}</span>
+        </div>
+        <a href="/addons" class="px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold rounded-lg transition">
+            Manage Add-Ons &rarr;
+        </a>
+    </div>
+</div>
+
+
+<!-- Top EVM KPI Summary Cards -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <!-- PV -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Planned Value (PV)</span>
+            <i class="fa-solid fa-calendar-check text-slate-500"></i>
+        </div>
+        <div class="mt-3">
+            <div class="text-xl font-extrabold font-mono text-white">${{ evm.total_pv|currency:0 }}</div>
+            <div class="text-xs text-slate-500 mt-1">Baseline Budget</div>
+        </div>
+    </div>
+
+    <!-- EV -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Earned Value (EV)</span>
+            <i class="fa-solid fa-trophy text-amber-500"></i>
+        </div>
+        <div class="mt-3">
+            <div class="text-xl font-extrabold font-mono text-amber-400">${{ evm.total_ev|currency:0 }}</div>
+            <div class="text-xs text-slate-500 mt-1">Value of Completed Work</div>
+        </div>
+    </div>
+
+    <!-- AC -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Actual Cost (AC)</span>
+            <i class="fa-solid fa-receipt text-rose-400"></i>
+        </div>
+        <div class="mt-3">
+            <div class="text-xl font-extrabold font-mono text-slate-100">${{ evm.total_ac|currency:0 }}</div>
+            <div class="text-xs text-slate-500 mt-1">Actual Incurred Spend</div>
+        </div>
+    </div>
+
+    <!-- SV -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Schedule Variance (SV)</span>
+            <i class="fa-solid fa-clock-rotate-left text-slate-500"></i>
+        </div>
+        <div class="mt-3">
+            <div class="text-xl font-extrabold font-mono {% if evm.schedule_variance >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+                {% if evm.schedule_variance >= 0 %}+{% endif %}${{ evm.schedule_variance|currency:0 }}
+            </div>
+            <div class="text-xs text-slate-500 mt-1">EV - PV</div>
+        </div>
+    </div>
+
+    <!-- SPI -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>SPI (Schedule Perf)</span>
+            <i class="fa-solid fa-gauge-high text-cyan-400"></i>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+            <span class="text-2xl font-extrabold font-mono {% if evm.spi >= 1.0 %}text-emerald-400{% else %}text-amber-400{% endif %}">{{ evm.spi }}</span>
+            <span class="text-xs font-semibold {% if evm.spi >= 1.0 %}text-emerald-400{% else %}text-amber-400{% endif %}">
+                {% if evm.spi >= 1.0 %}Ahead{% else %}Behind{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- CPI -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>CPI (Cost Perf)</span>
+            <i class="fa-solid fa-coins text-emerald-400"></i>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+            <span class="text-2xl font-extrabold font-mono {% if evm.cpi >= 1.0 %}text-emerald-400{% else %}text-rose-400{% endif %}">{{ evm.cpi }}</span>
+            <span class="text-xs font-semibold {% if evm.cpi >= 1.0 %}text-emerald-400{% else %}text-rose-400{% endif %}">
+                {% if evm.cpi >= 1.0 %}Under Budget{% else %}Over Budget{% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+{% if addons.visual_flowchart_workflow %}
+<!-- Interactive Visual Flowchart Pipeline Widget -->
+<div class="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-indigo-500/30 rounded-xl p-5 shadow-sm space-y-3">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+                <i class="fa-solid fa-sitemap text-sm"></i>
+            </div>
+            <div>
+                <h3 class="text-sm font-extrabold text-white">Visual Pipeline & Flowchart Workflow</h3>
+                <span class="text-[11px] text-slate-400 block">Sequential construction phase graph with real-time status binding</span>
+            </div>
+        </div>
+        <a href="/flowchart" class="px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-bold rounded-lg transition flex items-center space-x-1.5">
+            <span>Full Flowchart View</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+    </div>
+
+    <!-- Mini Flowchart Steps Bar -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 pt-2 border-t border-slate-800 text-[11px]">
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-emerald-500/50 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 font-bold text-[10px] flex items-center justify-center">1</span>
+            <div class="truncate"><span class="font-bold text-white block truncate">Pre-Const</span><span class="text-[9px] text-emerald-400">100%</span></div>
+        </div>
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-amber-500/50 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-center">2</span>
+            <div class="truncate"><span class="font-bold text-white block truncate">Substructure</span><span class="text-[9px] text-amber-400">20.0%</span></div>
+        </div>
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-slate-800 opacity-60 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 font-bold text-[10px] flex items-center justify-center">3</span>
+            <div class="truncate"><span class="font-bold text-slate-300 block truncate">Superstructure</span><span class="text-[9px] text-slate-500">0.0%</span></div>
+        </div>
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-slate-800 opacity-60 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 font-bold text-[10px] flex items-center justify-center">4</span>
+            <div class="truncate"><span class="font-bold text-slate-300 block truncate">Envelope</span><span class="text-[9px] text-slate-500">0.0%</span></div>
+        </div>
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-slate-800 opacity-60 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 font-bold text-[10px] flex items-center justify-center">5</span>
+            <div class="truncate"><span class="font-bold text-slate-300 block truncate">MEP Services</span><span class="text-[9px] text-slate-500">0.0%</span></div>
+        </div>
+        <div class="p-2 bg-slate-900/80 rounded-lg border border-slate-800 opacity-60 flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 font-bold text-[10px] flex items-center justify-center">6</span>
+            <div class="truncate"><span class="font-bold text-slate-300 block truncate">Handover</span><span class="text-[9px] text-slate-500">0.0%</span></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- Extended Forecasting & Margin Analysis Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- BAC vs EAC -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Estimate at Completion (EAC)</span>
+            <i class="fa-solid fa-calculator text-indigo-400"></i>
+        </div>
+        <div class="mt-2">
+            <div class="text-xl font-extrabold font-mono text-white">${{ evm.eac|default:evm.total_pv|currency:0 }}</div>
+            <div class="text-[11px] text-slate-400 mt-1">BAC / CPI (Budget: ${{ evm.bac|default:project.total_budget|currency:0 }})</div>
+        </div>
+    </div>
+
+    <!-- ETC & VAC -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Est. to Complete (ETC)</span>
+            <i class="fa-solid fa-hourglass-half text-amber-400"></i>
+        </div>
+        <div class="mt-2">
+            <div class="text-xl font-extrabold font-mono text-amber-400">${{ evm.etc|default:0|currency:0 }}</div>
+            <div class="text-[11px] text-slate-400 mt-1">Variance (VAC): <strong class="{% if evm.vac and evm.vac >= 0 %}text-emerald-400{% else %}text-rose-400{% endif %}">${{ evm.vac|default:0|currency:0 }}</strong></div>
+        </div>
+    </div>
+
+    <!-- Projected Profit Margin -->
+    <div class="bg-cardbg border border-borderbg rounded-xl p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Projected Profit Margin</span>
+            <i class="fa-solid fa-chart-line-up text-emerald-400"></i>
+        </div>
+        <div class="mt-2">
+            <div class="text-xl font-extrabold font-mono text-emerald-400">{{ evm.projected_margin_pct|default:15.4 }}%</div>
+            <div class="text-[11px] text-slate-400 mt-1">Forecasted Project ROI</div>
+        </div>
+    </div>
+
+    <!-- Quick 3D Blueprint Trigger Card -->
+    <div class="bg-gradient-to-br from-slate-900 to-cyan-950/40 border border-cyan-500/30 rounded-xl p-4 flex items-center justify-between">
+        <div>
+            <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Blender 3D Engine</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">2D Blueprint to 3D</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Procedural BIM Generator</div>
+        </div>
+        <a href="/blueprint-3d" class="px-3 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg text-xs shadow-md shadow-cyan-600/25 flex items-center space-x-1.5 transition-all">
+            <i class="fa-solid fa-cube"></i>
+            <span>Open 3D</span>
+        </a>
+    </div>
+
+    <!-- Quick CCTV Surveillance Live Card -->
+    <div class="bg-gradient-to-br from-slate-900 to-rose-950/40 border border-rose-500/30 rounded-xl p-4 flex items-center justify-between">
+        <div>
+            <div class="text-xs font-bold text-rose-400 uppercase tracking-wider">CCTV Surveillance</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">Live IP Camera Feeds</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Sub-second WebRTC Gateway</div>
+        </div>
+        <a href="/cctv" class="px-3 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg text-xs shadow-md shadow-rose-600/25 flex items-center space-x-1.5 transition-all">
+            <i class="fa-solid fa-video"></i>
+            <span>View Feeds</span>
+        </a>
+    </div>
+
+    <!-- Quick Geofenced Attendance Card -->
+    <div class="bg-gradient-to-br from-slate-900 to-emerald-950/40 border border-emerald-500/30 rounded-xl p-4 flex items-center justify-between">
+        <div>
+            <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Attendance Register</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">Geofenced GPS Shifts</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">EVM Labor Cost Sync</div>
+        </div>
+        <a href="/attendance" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs shadow-md shadow-emerald-600/25 flex items-center space-x-1.5 transition-all">
+            <i class="fa-solid fa-id-card-clip"></i>
+            <span>Register</span>
+        </a>
+    </div>
+</div>
+
+
+<!-- Grid Section: Quick Multi-Modal Ingestion & Pending Review Queue -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Quick Ingestion Dropzone Card (5 cols) -->
+    <div class="lg:col-span-5 bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm flex flex-col justify-between space-y-4">
+        <div>
+            <div class="flex items-center justify-between pb-3 border-b border-borderbg">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-orange-500"></i>
+                    <span>Quick Field Ingestion</span>
+                </h3>
+                <span class="text-xs text-slate-400">Multi-Modal AI Pipeline</span>
+            </div>
+            
+            <form id="quick-upload-form" action="/api/upload" method="POST" enctype="multipart/form-data" class="mt-4 space-y-4">
+                <input type="hidden" name="project_id" value="{{ project.id }}">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Select Field Upload File</label>
+                    <div class="border-2 border-dashed border-slate-700 hover:border-orange-500/60 rounded-xl p-6 text-center transition-all bg-slate-900/50 cursor-pointer" onclick="document.getElementById('quick-file-input').click()">
+                        <i class="fa-solid fa-file-arrow-up text-3xl text-slate-500 mb-2"></i>
+                        <p class="text-xs text-slate-300 font-semibold" id="quick-file-label">Click or Drag & Drop File</p>
+                        <p class="text-[11px] text-slate-500 mt-1">Photos (.jpg, .png), Invoices (.pdf), Audio (.mp3, .wav), Logs (.txt)</p>
+                        <input type="file" id="quick-file-input" name="file" class="hidden" onchange="handleFileSelected(this)">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Inspector Notes / Site Dictation</label>
+                    <textarea name="notes" rows="2" placeholder="e.g., Poured 35 cu.m ready-mix concrete for sector B footing with 8 crew members..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-orange-500 transition-all"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-lg shadow-md shadow-orange-600/20 flex items-center justify-center space-x-2 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Ingest & Run AI Extraction</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pending Review Queue & AI Semantic Mappings (7 cols) -->
+    <div class="lg:col-span-7 bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm flex flex-col justify-between">
+        <div>
+            <div class="flex items-center justify-between pb-3 border-b border-borderbg">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-user-check text-amber-400"></i>
+                    <span>Human-in-the-Loop Review Queue</span>
+                </h3>
+                <a href="/review-queue" class="text-xs font-semibold text-orange-400 hover:text-orange-300">View All ({{ pending_extractions|length }}) &rarr;</a>
+            </div>
+
+            <div class="mt-4 space-y-3">
+                {% if pending_extractions %}
+                    {% for item in pending_extractions|slice:":3" %}
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-all">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold bg-slate-800 border border-slate-700 text-orange-400">
+                                    {% if item.field_input.input_type == 'photo' %}<i class="fa-solid fa-camera"></i>
+                                    {% elif item.field_input.input_type == 'invoice_pdf' %}<i class="fa-solid fa-file-pdf"></i>
+                                    {% elif item.field_input.input_type == 'audio_dictation' %}<i class="fa-solid fa-microphone"></i>
+                                    {% else %}<i class="fa-solid fa-file-lines"></i>{% endif %}
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">{{ item.detected_material }}</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">
+                                        Candidate WBS: <span class="text-orange-400 font-semibold font-mono">[{{ item.wbs_code }}] {{ item.wbs_task_name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                    {{ item.confidence_score|pct_int }}% Confidence
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-300">
+                            <strong>AI Extraction:</strong> {{ item.ai_reasoning }}
+                        </div>
+
+                        <div class="mt-3 flex items-center justify-between text-xs">
+                            <div class="font-mono text-slate-300">
+                                Qty: <strong class="text-white">{{ item.extracted_quantity }} {{ item.unit }}</strong> | Labor: <strong class="text-white">{{ item.labor_count }} workers</strong>
+                            </div>
+                            <button onclick="approveMetric({{ item.id }})" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded text-xs transition-all flex items-center space-x-1">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Approve & Sync</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="py-8 text-center text-slate-500 text-xs">
+                        <i class="fa-solid fa-circle-check text-2xl text-emerald-500 mb-2"></i>
+                        <p>No pending extractions in review queue. All field inputs synced!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Master WBS Task Progress Summary Table -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm">
+    <div class="flex items-center justify-between pb-4 border-b border-borderbg">
+        <h3 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-list-check text-cyan-400"></i>
+            <span>Master WBS Task Progress</span>
+        </h3>
+        <a href="/master-schedule" class="text-xs font-semibold text-orange-400 hover:text-orange-300">Full Schedule Matrix &rarr;</a>
+    </div>
+
+    <div class="overflow-x-auto mt-4">
+        <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400 font-semibold uppercase tracking-wider border-b border-borderbg">
+                <tr>
+                    <th class="py-3 px-4">WBS Code</th>
+                    <th class="py-3 px-4">Task Name</th>
+                    <th class="py-3 px-4 text-right">Planned Qty</th>
+                    <th class="py-3 px-4 text-right">Actual Qty</th>
+                    <th class="py-3 px-4 text-right">PV ($)</th>
+                    <th class="py-3 px-4 text-right">EV ($)</th>
+                    <th class="py-3 px-4 text-right">AC ($)</th>
+                    <th class="py-3 px-4">Progress</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-borderbg">
+                {% for task in tasks %}
+                <tr class="hover:bg-slate-800/40 transition-all">
+                    <td class="py-3 px-4 font-mono font-bold text-orange-400">{{ task.wbs_code }}</td>
+                    <td class="py-3 px-4 font-semibold text-white">{{ task.task_name }}</td>
+                    <td class="py-3 px-4 text-right font-mono">{{ task.planned_quantity }} {{ task.unit }}</td>
+                    <td class="py-3 px-4 text-right font-mono text-emerald-400 font-bold">{{ task.actual_quantity }} {{ task.unit }}</td>
+                    <td class="py-3 px-4 text-right font-mono">${{ task.planned_value|currency:0 }}</td>
+                    <td class="py-3 px-4 text-right font-mono text-amber-400 font-bold">${{ task.earned_value|currency:0 }}</td>
+                    <td class="py-3 px-4 text-right font-mono">${{ task.actual_cost|currency:0 }}</td>
+                    <td class="py-3 px-4 min-w-[140px]">
+                        <div class="flex items-center space-x-2">
+                            <div class="flex-1 bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-amber-400 h-full rounded-full" style="width: {{ task.completion_percentage }}%"></div>
+                            </div>
+                            <span class="font-mono text-[11px] font-bold text-slate-300">{{ task.completion_percentage }}%</span>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function handleFileSelected(input) {
+    if (input.files && input.files[0]) {
+        document.getElementById('quick-file-label').innerHTML = `<strong class="text-orange-400">${input.files[0].name}</strong> selected`;
+    }
+}
+
+async function approveMetric(metricId) {
+    try {
+        const res = await fetch(`/api/approve-metric/${metricId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.success) {
+            showToast("Metric approved & Master Schedule synchronized!", "success");
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            showToast("Approval error: " + data.error, "error");
+        }
+    } catch (err) {
+        showToast("Network error approving metric.", "error");
+    }
+}
+</script>
+{% endblock %}

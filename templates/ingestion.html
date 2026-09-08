@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}Multi-Modal Ingestion - ConstructSync AI{% endblock %}
+{% block page_title %}Multi-Modal Field Ingestion Hub{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+        <h2 class="text-xl font-bold text-white tracking-tight">Multi-Modal Ingestion Pipeline</h2>
+        <p class="text-xs text-slate-400 mt-1">Upload site photos, PDF invoices, voice notes, or text logs. The AI engine automatically parses material quantities and candidate WBS tasks.</p>
+    </div>
+</div>
+
+<!-- Tabbed Ingestion Form Card -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm">
+    <!-- Mode Selection Tabs -->
+    <div class="flex items-center space-x-2 border-b border-borderbg pb-3 mb-6 overflow-x-auto">
+        <button onclick="switchTab('photo')" id="tab-photo" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all bg-orange-600 text-white flex items-center space-x-2">
+            <i class="fa-solid fa-camera"></i>
+            <span>Photo / Visual Progress</span>
+        </button>
+        <button onclick="switchTab('blueprint')" id="tab-blueprint" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:bg-slate-800 hover:text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-drafting-compass text-emerald-400"></i>
+            <span>Architectural Blueprint (PDF/CAD)</span>
+        </button>
+        <button onclick="switchTab('invoice')" id="tab-invoice" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:bg-slate-800 hover:text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>PDF Invoice / Delivery Bill</span>
+        </button>
+        <button onclick="switchTab('audio')" id="tab-audio" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:bg-slate-800 hover:text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-microphone"></i>
+            <span>Audio Voice Note</span>
+        </button>
+        <button onclick="switchTab('text')" id="tab-text" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:bg-slate-800 hover:text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Site Supervisor Text Log</span>
+        </button>
+    </div>
+
+    <!-- Active Form Container -->
+    <form id="ingestion-form" onsubmit="handleIngestionUpload(event)" class="space-y-4">
+        <input type="hidden" name="project_id" value="{{ project.id }}">
+        <input type="hidden" id="input_type_field" name="input_type" value="photo">
+
+        <!-- File Upload Drag Zone (For Photo, Invoice, Audio) -->
+        <div id="file-drop-container">
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1" id="file-label-text font-bold">Upload Site Imagery / Photo</label>
+            <div class="border-2 border-dashed border-slate-700 hover:border-orange-500 rounded-xl p-8 text-center transition-all bg-slate-900/60 cursor-pointer" onclick="document.getElementById('ingest-file-input').click()">
+                <i id="upload-icon" class="fa-solid fa-cloud-arrow-up text-4xl text-orange-500 mb-3"></i>
+                <p class="text-sm font-semibold text-slate-200" id="file-title">Drop or click to select photo file</p>
+                <p class="text-xs text-slate-500 mt-1" id="file-desc">Accepts JPG, JPEG, PNG, WEBP high-resolution site photos</p>
+                <input type="file" id="ingest-file-input" name="file" class="hidden" onchange="handleFileChange(this)">
+            </div>
+        </div>
+
+        <!-- Direct Text Area & Voice Dictation Widget -->
+        <div id="text-log-container" class="hidden space-y-3">
+            <div class="flex items-center justify-between">
+                <label class="block text-xs font-semibold text-slate-300 uppercase">Supervisor Work Log & Voice Dictation</label>
+                <button type="button" onclick="toggleVoiceDictation()" id="voice-rec-btn" class="px-3 py-1.5 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-microphone text-rose-400" id="voice-rec-icon"></i>
+                    <span id="voice-rec-text">Start Speech-to-Text Dictation</span>
+                </button>
+            </div>
+            <textarea name="text_content" id="text_content" rows="4" placeholder="Enter daily site log details or click 'Start Speech-to-Text Dictation'... e.g. Completed installation of 45m rigid PVC electrical conduit along riser 3 with 4 crew members." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-orange-500 font-mono"></textarea>
+            <div id="voice-status-badge" class="hidden p-2.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-xs text-rose-300 flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span>Listening to live speech... Speak clearly into microphone.</span>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Context Notes & Inspector Comments</label>
+            <input type="text" name="notes" id="notes" placeholder="Optional context or tag references..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-orange-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Source Author / Inspector</label>
+                <input type="text" name="source_author" value="Chief Inspector Marcus Vance" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-orange-500">
+            </div>
+            <div class="flex items-end">
+                <button type="submit" id="submit-btn" class="w-full py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-orange-600/20 flex items-center justify-center space-x-2 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Execute AI Multi-Modal Parsing</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Historical Field Ingestions Table -->
+<div class="bg-cardbg border border-borderbg rounded-xl p-6 shadow-sm space-y-4">
+    <h3 class="text-base font-bold text-white flex items-center space-x-2">
+        <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+        <span>Ingested Field Input Repository</span>
+    </h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400 font-semibold uppercase tracking-wider border-b border-borderbg">
+                <tr>
+                    <th class="py-3 px-4">ID</th>
+                    <th class="py-3 px-4">Input Type</th>
+                    <th class="py-3 px-4">Original Filename</th>
+                    <th class="py-3 px-4">Inspector / Author</th>
+                    <th class="py-3 px-4">Uploaded At</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-borderbg">
+                {% for item in field_inputs %}
+                <tr class="hover:bg-slate-800/40 transition-all">
+                    <td class="py-3 px-4 font-mono font-bold text-slate-400">#{{ item.id }}</td>
+                    <td class="py-3 px-4 capitalize font-semibold text-white">
+                        {% if item.input_type == 'photo' %}<i class="fa-solid fa-camera text-sky-400 mr-1.5"></i> Photo
+                        {% elif item.input_type == 'invoice_pdf' %}<i class="fa-solid fa-file-pdf text-rose-400 mr-1.5"></i> PDF Invoice
+                        {% elif item.input_type == 'audio_dictation' %}<i class="fa-solid fa-microphone text-amber-400 mr-1.5"></i> Audio Note
+                        {% else %}<i class="fa-solid fa-file-lines text-emerald-400 mr-1.5"></i> Text Log{% endif %}
+                    </td>
+                    <td class="py-3 px-4 font-mono text-slate-200">{{ item.original_filename }}</td>
+                    <td class="py-3 px-4 text-slate-400">{{ item.source_author }}</td>
+                    <td class="py-3 px-4 text-slate-400 font-mono">{{ item.uploaded_at|date:"Y-m-d H:i" }}</td>
+                    <td class="py-3 px-4">
+                        {% if item.status == 'approved' %}
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Approved</span>
+                        {% elif item.status == 'pending_review' %}
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">Pending Review</span>
+                        {% else %}
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">Rejected</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <a href="/review-queue" class="text-xs font-semibold text-orange-400 hover:text-orange-300">View Extractions &rarr;</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- NoSQL Document Storage Repository Card -->
+<div class="bg-cardbg border border-emerald-500/30 rounded-xl p-6 shadow-sm space-y-4">
+    <div class="flex items-center justify-between border-b border-borderbg pb-3">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+                <i class="fa-solid fa-database text-sm"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <span>NoSQL Project File Database</span>
+                    <span id="nosql-table-badge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono px-2 py-0.5 rounded-full font-bold">
+                        Table: {{ current_project.name }}
+                    </span>
+                </h3>
+                <p class="text-xs text-slate-400">All invoices, pictures, voice notes, and 3D models stored as NoSQL documents in collection/table named after the project.</p>
+            </div>
+        </div>
+
+        <button onclick="syncAllToNoSQL()" class="px-3.5 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold rounded-xl transition flex items-center space-x-2">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Batch Sync All Files to NoSQL</span>
+        </button>
+    </div>
+
+    <!-- NoSQL Files Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400 font-semibold uppercase tracking-wider border-b border-borderbg">
+                <tr>
+                    <th class="py-3 px-4">Doc ID</th>
+                    <th class="py-3 px-4">Category</th>
+                    <th class="py-3 px-4">Filename</th>
+                    <th class="py-3 px-4">File Path</th>
+                    <th class="py-3 px-4 text-right">Size</th>
+                    <th class="py-3 px-4">Stored Engine</th>
+                </tr>
+            </thead>
+            <tbody id="nosql-files-tbody" class="divide-y divide-borderbg">
+                <tr>
+                    <td colspan="6" class="py-6 text-center text-slate-500 text-xs">
+                        <i class="fa-solid fa-spinner animate-spin mr-1"></i> Loading NoSQL project document table...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let currentTab = 'photo';
+
+function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('input_type_field').value = tab;
+
+    // Reset tab styles
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = "tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:bg-slate-800 hover:text-slate-200 flex items-center space-x-2";
+    });
+    document.getElementById(`tab-${tab}`).className = "tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all bg-orange-600 text-white flex items-center space-x-2";
+
+    const dropContainer = document.getElementById('file-drop-container');
+    const textContainer = document.getElementById('text-log-container');
+    const fileTitle = document.getElementById('file-title');
+    const fileDesc = document.getElementById('file-desc');
+    const uploadIcon = document.getElementById('upload-icon');
+
+    if (tab === 'text') {
+        dropContainer.classList.add('hidden');
+        textContainer.classList.remove('hidden');
+    } else {
+        dropContainer.classList.remove('hidden');
+        textContainer.classList.add('hidden');
+
+        if (tab === 'photo') {
+            uploadIcon.className = "fa-solid fa-camera text-4xl text-orange-500 mb-3";
+            fileTitle.innerText = "Drop or click to select site photo";
+            fileDesc.innerText = "Accepts JPG, JPEG, PNG, WEBP site imagery";
+        } else if (tab === 'blueprint') {
+            uploadIcon.className = "fa-solid fa-drafting-compass text-4xl text-emerald-400 mb-3";
+            fileTitle.innerText = "Drop or click to select Architectural Blueprint";
+            fileDesc.innerText = "Accepts PDF, CAD/DWG, DXF, PNG/JPG drawings. Triggers full pipeline!";
+        } else if (tab === 'invoice') {
+            uploadIcon.className = "fa-solid fa-file-pdf text-4xl text-rose-500 mb-3";
+            fileTitle.innerText = "Drop or click to select PDF invoice";
+            fileDesc.innerText = "Accepts PDF vendor delivery notes & material bills";
+        } else if (tab === 'audio') {
+            uploadIcon.className = "fa-solid fa-microphone text-4xl text-amber-500 mb-3";
+            fileTitle.innerText = "Drop or click to select voice note audio";
+            fileDesc.innerText = "Accepts MP3, WAV, M4A, OGG site dictations";
+        }
+    }
+}
+
+function handleFileChange(input) {
+    if (input.files && input.files[0]) {
+        document.getElementById('file-title').innerHTML = `<strong class="text-orange-400">${input.files[0].name}</strong> selected`;
+    }
+}
+
+async function handleIngestionUpload(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Processing Pipeline...</span>`;
+
+    const endpoint = currentTab === 'blueprint' ? '/api/upload-blueprint' : '/api/upload';
+
+    if (currentTab === 'blueprint') {
+        const fileInput = document.getElementById('ingest-file-input');
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+            formData.append('blueprint_file', fileInput.files[0]);
+        }
+    }
+
+    try {
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+            showToast("Blueprint ingested & full processing pipeline executed!", "success");
+            setTimeout(() => window.location.href = currentTab === 'blueprint' ? '/flowchart' : '/review-queue', 1200);
+        } else {
+            showToast("Processing error: " + data.error, "error");
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span>Execute AI Multi-Modal Parsing</span>`;
+        }
+    } catch (err) {
+        showToast("Network error uploading file.", "error");
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span>Execute AI Multi-Modal Parsing</span>`;
+    }
+}
+
+
+async function loadNoSQLFiles() {
+    const tbody = document.getElementById('nosql-files-tbody');
+    try {
+        const res = await fetch('/api/nosql/files');
+        const data = await res.json();
+        if (data.success && data.files && data.files.length > 0) {
+            document.getElementById('nosql-table-badge').innerText = `Table: ${data.nosql_table_name}`;
+            tbody.innerHTML = data.files.map(f => `
+                <tr class="hover:bg-slate-800/40 transition-all">
+                    <td class="py-3 px-4 font-mono text-emerald-400 font-bold">${f.doc_id || 'N/A'}</td>
+                    <td class="py-3 px-4 uppercase font-semibold text-slate-300">${f.file_category || 'file'}</td>
+                    <td class="py-3 px-4 font-semibold text-white">${f.filename}</td>
+                    <td class="py-3 px-4 font-mono text-slate-400">${f.rel_file_path}</td>
+                    <td class="py-3 px-4 text-right font-mono text-slate-300">${(f.file_size_bytes / 1024).toFixed(1)} KB</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${f.stored_in === 'mongodb' ? 'bg-green-500/20 text-green-400' : 'bg-emerald-500/20 text-emerald-300'}">
+                            ${f.stored_in || 'embedded_nosql'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        } else {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="py-6 text-center text-slate-400 text-xs">
+                        <i class="fa-solid fa-database text-lg text-slate-500 mb-1 block"></i>
+                        No files currently stored in project NoSQL table. Click "Batch Sync All Files to NoSQL" above to sync existing uploads.
+                    </td>
+                </tr>
+            `;
+        }
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-rose-400 text-xs">Failed to load NoSQL table documents.</td></tr>`;
+    }
+}
+
+async function syncAllToNoSQL() {
+    showToast("Syncing all project files to NoSQL database table...", "info");
+    try {
+        const res = await fetch('/api/nosql/sync', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showToast(`Synced ${data.synced_count} project files to NoSQL table '${data.table_name}'!`, "success");
+            loadNoSQLFiles();
+        } else {
+            showToast("NoSQL sync error: " + data.error, "error");
+        }
+    } catch (err) {
+        showToast("Network error syncing to NoSQL.", "error");
+    }
+}
+
+let speechRecognition = null;
+let isRecognizing = false;
+
+function toggleVoiceDictation() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        showToast("Speech Recognition API is not supported in this browser.", "error");
+        return;
+    }
+
+    const btnText = document.getElementById('voice-rec-text');
+    const badge = document.getElementById('voice-status-badge');
+    const textArea = document.getElementById('text_content');
+
+    if (isRecognizing && speechRecognition) {
+        speechRecognition.stop();
+        isRecognizing = false;
+        btnText.innerText = "Start Speech-to-Text Dictation";
+        badge.classList.add('hidden');
+        showToast("Voice recording stopped.", "info");
+        return;
+    }
+
+    speechRecognition = new SpeechRecognition();
+    speechRecognition.continuous = true;
+    speechRecognition.interimResults = true;
+    speechRecognition.lang = 'en-US';
+
+    speechRecognition.onstart = () => {
+        isRecognizing = true;
+        btnText.innerText = "Stop Recording Speech";
+        badge.classList.remove('hidden');
+        showToast("Voice dictation active! Start speaking...", "success");
+    };
+
+    speechRecognition.onresult = (event) => {
+        let finalTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript;
+            }
+        }
+        if (finalTranscript) {
+            textArea.value += (textArea.value ? ' ' : '') + finalTranscript;
+        }
+    };
+
+    speechRecognition.onerror = (err) => {
+        isRecognizing = false;
+        btnText.innerText = "Start Speech-to-Text Dictation";
+        badge.classList.add('hidden');
+        showToast("Speech recognition error: " + err.error, "error");
+    };
+
+    speechRecognition.onend = () => {
+        isRecognizing = false;
+        btnText.innerText = "Start Speech-to-Text Dictation";
+        badge.classList.add('hidden');
+    };
+
+    speechRecognition.start();
+}
+
+document.addEventListener('DOMContentLoaded', loadNoSQLFiles);
+</script>
+{% endblock %}
+

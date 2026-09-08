@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ConstructSync AI - Enterprise Construction Management{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        darkbg: '#090d16',
+                        cardbg: '#111827',
+                        borderbg: '#1f2937'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-200 min-h-screen flex flex-col md:flex-row font-sans antom-antialiased">
+
+    <!-- Left Sidebar -->
+    <aside class="w-full md:w-64 bg-cardbg border-b md:border-b-0 md:border-r border-borderbg flex-shrink-0 flex flex-col justify-between">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-5 border-b border-borderbg flex items-center justify-between">
+                <a href="/" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                        <i class="fa-solid font-bold fa-helmet-safety text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg text-white tracking-tight">Construct<span class="text-orange-500">Sync</span></span>
+                        <span class="block text-xs font-semibold text-orange-400/90 tracking-widest uppercase">AI Engine</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1.5">
+                <a href="/" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'dashboard' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Executive Dashboard</span>
+                </a>
+                
+                <a href="/master-schedule" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'master_schedule' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i>
+                    <span>Master WBS Schedule</span>
+                </a>
+
+                <a href="/ingestion" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'ingestion' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-cloud-arrow-up w-5 text-center"></i>
+                    <span>Multi-Modal Ingestion</span>
+                </a>
+
+                <a href="/review-queue" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all justify-between {% if active_page == 'review_queue' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-user-check w-5 text-center"></i>
+                        <span>HITL Review Queue</span>
+                    </div>
+                    {% if pending_review_count and pending_review_count > 0 %}
+                    <span class="bg-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded-full font-bold border border-amber-500/30">
+                        {{ pending_review_count }}
+                    </span>
+                    {% endif %}
+                </a>
+
+                <a href="/blueprint-3d" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'blueprint_3d' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-cube w-5 text-center text-cyan-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>3D Blueprint Engine</span>
+                        <span class="text-[10px] bg-cyan-500/20 text-cyan-300 font-extrabold px-1.5 py-0.5 rounded border border-cyan-500/30">3D</span>
+                    </span>
+                </a>
+
+                <a href="/suppliers" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'suppliers' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-truck-field w-5 text-center text-indigo-400"></i>
+                    <span>Supplier Matrix</span>
+                </a>
+
+                <a href="/analytics" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'analytics' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-chart-line w-5 text-center"></i>
+                    <span>EVM Analytics</span>
+                </a>
+
+                <a href="/flowchart" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'flowchart' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-sitemap w-5 text-center text-indigo-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>Visual Workflow</span>
+                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 font-extrabold px-1.5 py-0.5 rounded border border-indigo-500/30">Pipeline</span>
+                    </span>
+                </a>
+
+                <a href="/addons" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'addons' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-puzzle-piece w-5 text-center text-emerald-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>Add-Ons Engine</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-1.5 py-0.5 rounded border border-emerald-500/30">Modular</span>
+                    </span>
+                </a>
+
+                <a href="/companion" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'companion' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-mobile-screen-button w-5 text-center text-purple-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>Mobile Companion</span>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-300 font-extrabold px-1.5 py-0.5 rounded border border-purple-500/30">Geofence</span>
+                    </span>
+                </a>
+
+                <a href="/cctv" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'cctv' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-video w-5 text-center text-rose-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>CCTV Surveillance</span>
+                        <span class="text-[10px] bg-rose-500/20 text-rose-300 font-extrabold px-1.5 py-0.5 rounded border border-rose-500/30">Live</span>
+                    </span>
+                </a>
+
+                <a href="/attendance" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all {% if active_page == 'attendance' %}bg-orange-500/10 text-orange-400 border-l-4 border-orange-500 font-semibold{% else %}text-slate-400 hover:bg-slate-800/60 hover:text-slate-200{% endif %}">
+                    <i class="fa-solid fa-id-card-clip w-5 text-center text-emerald-400"></i>
+                    <span class="flex items-center justify-between w-full">
+                        <span>Attendance Register</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-1.5 py-0.5 rounded border border-emerald-500/30">Register</span>
+                    </span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-borderbg space-y-3">
+            <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800 text-xs">
+                <div class="flex items-center justify-between text-slate-400 mb-1">
+                    <span>MySQL Database:</span>
+                    <span class="flex items-center text-emerald-400 font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span> Connected
+                    </span>
+                </div>
+                <div class="text-slate-400">
+                    Engine: <span class="text-slate-200 font-mono">SQLAlchemy ORM</span>
+                </div>
+            </div>
+            
+            <button onclick="triggerSeedData()" class="w-full py-2 px-3 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center space-x-2 transition-all">
+                <i class="fa-solid fa-database"></i>
+                <span>Reset Demo Seed Data</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <!-- Top Navbar -->
+        <header class="bg-cardbg border-b border-borderbg px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 shadow-md backdrop-blur-md bg-opacity-90">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-xl font-bold text-white tracking-tight flex items-center space-x-2">
+                    {% block page_title %}Dashboard{% endblock %}
+                </h1>
+                
+                <!-- Project Selector Dropdown -->
+                <div class="flex items-center space-x-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+                    <i class="fa-solid fa-building-user text-orange-400"></i>
+                    <span class="text-slate-400 font-medium hidden sm:inline">Project:</span>
+                    <select id="project-switcher" onchange="switchActiveProject(this.value)" class="bg-transparent text-slate-200 font-bold focus:outline-none cursor-pointer max-w-[200px] truncate">
+                        {% for p in all_projects %}
+                        <option value="{{ p.id }}" class="bg-slate-900 text-slate-200" {% if current_project and current_project.id == p.id %}selected{% endif %}>
+                            {{ p.code }} - {{ p.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Unified Industry Sector Switcher Dropdown -->
+                <div class="flex items-center space-x-2 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+                    <i class="fa-solid {{ current_industry.icon|default:'fa-helmet-safety' }} text-orange-400"></i>
+                    <select id="industry-switcher" onchange="switchActiveIndustry(this.value)" class="bg-transparent text-white font-bold focus:outline-none cursor-pointer">
+                        {% for ind in all_industries %}
+                        <option value="{{ ind.key }}" class="bg-slate-900 text-slate-200" {% if active_industry_key == ind.key %}selected{% endif %}>
+                            {{ ind.name }} ({{ ind.theme_badge }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <a href="/select-industry" class="text-slate-400 hover:text-white ml-1" title="Industry Selector Portal">
+                        <i class="fa-solid fa-grid-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-1.5 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800 text-xs">
+                    <i class="fa-solid fa-palette text-orange-400"></i>
+                    <select id="theme-selector" onchange="changeThemePalette(this.value)" class="bg-transparent text-slate-300 font-semibold focus:outline-none text-xs cursor-pointer">
+                        <option value="industrial" class="bg-slate-900 text-slate-200">Industrial Steel</option>
+                        <option value="cobalt" class="bg-slate-900 text-slate-200">Cobalt Blue</option>
+                        <option value="sage" class="bg-slate-900 text-slate-200">Sage Emerald</option>
+                        <option value="light" class="bg-slate-900 text-slate-200">Light Mode</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+                    <span class="text-slate-400 mr-2"><i class="fa-regular fa-clock"></i> Local:</span>
+                    <span id="header-clock" class="font-mono text-orange-400 font-semibold">--:--:--</span>
+                </div>
+
+                <!-- New Project Button -->
+                <button onclick="openNewProjectModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-md shadow-emerald-600/20">
+                    <i class="fa-solid fa-folder-plus"></i>
+                    <span>+ New Project</span>
+                </button>
+
+                <a href="/ingestion" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-md shadow-orange-600/20">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New Upload</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- New Project Modal -->
+        <div id="newProjectModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-cardbg border border-borderbg rounded-xl max-w-lg w-full p-6 space-y-5 shadow-2xl relative">
+                <button onclick="closeNewProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="flex items-center space-x-3 pb-3 border-b border-borderbg">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Create New Construction Project</h3>
+                        <p class="text-xs text-slate-400">Initialize a new project with baseline WBS tasks & EVM tracking.</p>
+                    </div>
+                </div>
+
+                <form onsubmit="submitNewProject(event)" class="space-y-4 text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 uppercase tracking-wider">Project Name *</label>
+                            <input type="text" id="np-name" required placeholder="e.g. Oakwood Medical Center" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 uppercase tracking-wider">Project Code *</label>
+                            <input type="text" id="np-code" required placeholder="e.g. PRJ-OAK-2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="font-bold text-slate-300 uppercase tracking-wider">Description</label>
+                        <textarea id="np-desc" rows="2" placeholder="Brief scope of works, foundation type, or floor count..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 uppercase tracking-wider">Budget ($)</label>
+                            <input type="number" id="np-budget" value="1500000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 uppercase tracking-wider">Start Date</label>
+                            <input type="date" id="np-start" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 uppercase tracking-wider">Target End</label>
+                            <input type="date" id="np-end" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <!-- Optional Architectural Blueprint File Upload -->
+                    <div class="space-y-1 pt-2 border-t border-slate-800">
+                        <label class="font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-1">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>Upload Architectural Blueprint (PDF, CAD/DWG, Image)</span>
+                        </label>
+                        <input type="file" id="np-blueprint" name="blueprint_file" accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg,.webp" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
+                        <span class="block text-[10px] text-slate-400">Triggers AI parsing, material takeoffs, automated cost estimation, 3D model, flowchart, and resource allocation.</span>
+                    </div>
+
+                    <div class="pt-3 border-t border-borderbg flex items-center justify-end space-x-3">
+                        <button type="button" onclick="closeNewProjectModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold">Cancel</button>
+
+                        <button type="submit" id="np-submit-btn" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg shadow-emerald-600/20 flex items-center space-x-2">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Create & Launch Project</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Dynamic Flash / Notification Messages -->
+        <div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+        <!-- Main Body -->
+        <main class="p-6 flex-1 max-w-7xl w-full mx-auto space-y-6">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function changeThemePalette(themeName) {
+            localStorage.setItem('constructsync_theme', themeName);
+            const html = document.documentElement;
+            const selector = document.getElementById('theme-selector');
+            if (selector) selector.value = themeName;
+
+            if (themeName === 'light') {
+                html.classList.remove('dark');
+                document.body.className = "bg-slate-100 text-slate-800 min-h-screen flex flex-col md:flex-row font-sans antialiased";
+            } else {
+                html.classList.add('dark');
+                if (themeName === 'cobalt') {
+                    document.body.className = "bg-[#0b1329] text-slate-200 min-h-screen flex flex-col md:flex-row font-sans antialiased";
+                } else if (themeName === 'sage') {
+                    document.body.className = "bg-[#091510] text-slate-200 min-h-screen flex flex-col md:flex-row font-sans antialiased";
+                } else {
+                    document.body.className = "bg-darkbg text-slate-200 min-h-screen flex flex-col md:flex-row font-sans antialiased";
+                }
+            }
+        }
+
+        // Restore saved theme on page load
+        const savedTheme = localStorage.getItem('constructsync_theme') || 'industrial';
+        changeThemePalette(savedTheme);
+
+        function updateClock() {
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            const clockEl = document.getElementById('header-clock');
+            if (clockEl) clockEl.innerText = timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-emerald-600 text-white border-emerald-500' :
+                           type === 'error' ? 'bg-rose-600 text-white border-rose-500' : 'bg-slate-800 text-slate-200 border-slate-700';
+            
+            toast.className = `pointer-events-auto px-4 py-3 rounded-lg border shadow-xl flex items-center justify-between space-x-3 text-sm transition-all duration-300 transform translate-y-0 opacity-100 ${bgClass}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white/70 hover:text-white">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function openNewProjectModal() {
+            document.getElementById('newProjectModal').classList.remove('hidden');
+        }
+
+        function closeNewProjectModal() {
+            document.getElementById('newProjectModal').classList.add('hidden');
+        }
+
+        async function switchActiveProject(projectId) {
+            try {
+                const res = await fetch('/api/projects/switch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ project_id: projectId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast(`Switched active project to ${data.project.code}`, 'success');
+                    setTimeout(() => window.location.reload(), 500);
+                } else {
+                    showToast(data.error || 'Failed to switch project.', 'error');
+                }
+            } catch (err) {
+                showToast('Network error switching project.', 'error');
+            }
+        }
+
+        async function switchActiveIndustry(industryKey) {
+            try {
+                const res = await fetch('/api/industry/switch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ industry_key: industryKey })
+                });
+                const data = await res.json();
+                if (data.success && data.target_route) {
+                    window.location.href = data.target_route;
+                } else {
+                    showToast(data.error || 'Failed to switch industry workspace.', 'error');
+                }
+            } catch (err) {
+                showToast('Network error switching industry.', 'error');
+            }
+        }
+
+        async function submitNewProject(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('np-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i><span>Initializing Pipeline...</span>';
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('np-name').value.trim());
+            formData.append('code', document.getElementById('np-code').value.trim());
+            formData.append('description', document.getElementById('np-desc').value.trim());
+            formData.append('total_budget', document.getElementById('np-budget').value || 1500000);
+            formData.append('start_date', document.getElementById('np-start').value);
+            formData.append('target_end_date', document.getElementById('np-end').value);
+
+            const fileInput = document.getElementById('np-blueprint');
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                formData.append('blueprint_file', fileInput.files[0]);
+            }
+
+            try {
+                const res = await fetch('/api/projects', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast(`Project '${data.project.name}' initialized & pipeline executed!`, 'success');
+                    closeNewProjectModal();
+                    setTimeout(() => window.location.reload(), 800);
+                } else {
+                    showToast(data.error || 'Failed to create project.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Create & Launch Project</span>';
+                }
+            } catch (err) {
+                showToast('Network error creating project.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Create & Launch Project</span>';
+            }
+        }
+
+
+        async function triggerSeedData() {
+            if (!confirm("Are you sure you want to reset and re-seed demo project data?")) return;
+            try {
+                const res = await fetch('/api/seed', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    showToast("Database successfully re-seeded!", "success");
+                    setTimeout(() => window.location.reload(), 1000);
+                } else {
+                    showToast("Failed to seed database: " + data.error, "error");
+                }
+            } catch (err) {
+                showToast("Network error seeding data.", "error");
+            }
+        }
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+
