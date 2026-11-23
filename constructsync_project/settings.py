@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,6 +64,18 @@ DATABASES = {
     }
 }
 
+# Vercel serverless writable SQLite fallback
+if 'VERCEL' in os.environ or os.environ.get('ENVIRONMENT') == 'vercel':
+    import shutil
+    tmp_db = Path('/tmp/db.sqlite3')
+    if not tmp_db.exists() and (BASE_DIR / 'db.sqlite3').exists():
+        try:
+            shutil.copyfile(BASE_DIR / 'db.sqlite3', tmp_db)
+        except Exception:
+            pass
+    db_path = tmp_db if tmp_db.exists() else (BASE_DIR / 'db.sqlite3')
+    DATABASES['default']['NAME'] = db_path
+
 AUTH_PASSWORD_VALIDATORS = []
 
 LANGUAGE_CODE = 'en-us'
@@ -72,6 +85,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / 'static' / 'uploads'

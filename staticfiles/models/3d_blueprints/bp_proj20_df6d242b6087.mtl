@@ -1,0 +1,79 @@
+# ConstructSync AI Ultra-Detailed Architectural 3D Materials
+newmtl Concrete_Slab
+Kd 0.35 0.38 0.42
+Ka 0.20 0.20 0.20
+Ks 0.10 0.10 0.10
+Ns 10
+
+newmtl Exterior_Wall
+Kd 0.90 0.90 0.86
+Ka 0.30 0.30 0.28
+Ks 0.20 0.20 0.20
+Ns 20
+
+newmtl Interior_Wall
+Kd 0.96 0.96 0.96
+Ka 0.40 0.40 0.40
+Ks 0.10 0.10 0.10
+Ns 10
+
+newmtl Window_Glass
+Kd 0.20 0.65 0.95
+Ka 0.15 0.35 0.55
+Ks 0.95 0.95 0.95
+Ns 100
+d 0.45
+
+newmtl Window_Frame
+Kd 0.10 0.12 0.15
+Ka 0.10 0.10 0.10
+Ks 0.50 0.50 0.50
+Ns 40
+
+newmtl Door_Wood
+Kd 0.55 0.30 0.15
+Ka 0.20 0.10 0.05
+Ks 0.30 0.30 0.30
+Ns 30
+
+newmtl Door_Frame
+Kd 0.20 0.22 0.25
+Ka 0.15 0.15 0.15
+Ks 0.40 0.40 0.40
+Ns 30
+
+newmtl Roof_Vents
+Kd 0.65 0.68 0.72
+Ka 0.25 0.25 0.25
+Ks 0.85 0.85 0.85
+Ns 70
+
+newmtl Railing_Metal
+Kd 0.30 0.35 0.40
+Ka 0.15 0.15 0.15
+Ks 0.60 0.60 0.60
+Ns 50
+
+newmtl Structural_Steel
+Kd 0.85 0.45 0.10
+Ka 0.30 0.15 0.05
+Ks 0.70 0.70 0.70
+Ns 60
+
+newmtl Roof_Shingles
+Kd 0.18 0.20 0.25
+Ka 0.10 0.10 0.12
+Ks 0.20 0.20 0.20
+Ns 15
+
+newmtl Brick_Chimney
+Kd 0.70 0.25 0.15
+Ka 0.25 0.10 0.05
+Ks 0.15 0.15 0.15
+Ns 15
+
+newmtl Porch_Deck
+Kd 0.65 0.50 0.35
+Ka 0.20 0.15 0.10
+Ks 0.20 0.20 0.20
+Ns 20
