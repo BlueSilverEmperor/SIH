@@ -109,5 +109,26 @@
     },
     "file_payload_base64": "bXRsbGliIGJwX3Byb2oxOV90Ml8xLnBkZl81MjAubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBDb21tZXJjaWFsX1Rvd2VyDQoNCnYgLTE1LjQwMDAgLTAuNTAwMCAtMTAuMDAwMA0KdiAxNS40MDAwIC0wLjUwMDAgLTEw...[TRUNCATED_FOR_VIEW]",
     "full_base64_stored": true
+  },
+  {
+    "doc_id": "Building_2392836038",
+    "project_id": 19,
+    "project_name": "Building",
+    "project_code": "PRJ-BLD-26",
+    "nosql_table_name": "Building",
+    "filename": "2D_Technical_Blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj19_2D_Technical.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33249,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-09T04:21:14.306198",
+    "metadata": {
+      "wall_count": 18,
+      "column_count": 24,
+      "slab_area_sqm": 550.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oxOV8yRF9UZWNobmljYWwubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBSZXNpZGVudGlhbF9Ib3VzZQ0KDQp2IC0xNS40NTAwIC0wLjUwMDAgLTkuODUwMA0KdiAxNS40NTAwIC0wLjUwMDAgLTku...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
   }
 ]

@@ -1,0 +1,24 @@
+# ConstructSync AI 3D Blueprint Material File
+newmtl Concrete_Slab
+Kd 0.50 0.52 0.55
+Ka 0.20 0.20 0.20
+Ks 0.10 0.10 0.10
+Ns 10
+
+newmtl Exterior_Wall
+Kd 0.20 0.35 0.50
+Ka 0.10 0.15 0.25
+Ks 0.30 0.30 0.30
+Ns 30
+
+newmtl Interior_Wall
+Kd 0.80 0.82 0.85
+Ka 0.30 0.30 0.30
+Ks 0.10 0.10 0.10
+Ns 10
+
+newmtl Structural_Steel
+Kd 0.80 0.45 0.10
+Ka 0.30 0.15 0.05
+Ks 0.60 0.60 0.60
+Ns 50

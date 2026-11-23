@@ -15,6 +15,6 @@ if __name__ == '__main__':
     from django.core.management import execute_from_command_line
     host = os.environ.get('HOST', '127.0.0.1')
     port = os.environ.get('PORT', '5000')
-    print(f"Starting ConstructSync Django Server on http://{host}:{port} ...")
+    print(f"Starting Synapse Industrial OS Server on http://{host}:{port} ...")
     sys.argv = ['manage.py', 'runserver', f'{host}:{port}']
     execute_from_command_line(sys.argv)

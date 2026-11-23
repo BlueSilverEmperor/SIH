@@ -7,5 +7,5 @@ python manage.py migrate --noinput
 echo "[Docker] Seeding Database..."
 python seed.py
 
-echo "[Docker] Starting ConstructSync Django Application on port 5000..."
+echo "[Docker] Starting Synapse Industrial OS Application on port 5000..."
 exec python app.py

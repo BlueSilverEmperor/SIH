@@ -1,6 +1,6 @@
 [
   {
-    "doc_id": "Apex_Commercial_Tower_Phase_2_3871318664",
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1326253548",
     "project_id": 1,
     "project_name": "Apex Commercial Tower Phase 2",
     "project_code": "PRJ-APEX-SIH26122",
@@ -10,7 +10,7 @@
     "file_category": "text_log",
     "file_size_bytes": 0,
     "notes": "Daily site log notes",
-    "created_at": "2026-09-08T20:52:44.952296",
+    "created_at": "2026-09-11T16:13:38.283144",
     "metadata": {
       "source_author": "QA Inspector",
       "status": "pending_review"
@@ -57,7 +57,7 @@
     "full_base64_stored": false
   },
   {
-    "doc_id": "Apex_Commercial_Tower_Phase_2_2553288994",
+    "doc_id": "Apex_Commercial_Tower_Phase_2_4263123087",
     "project_id": 1,
     "project_name": "Apex Commercial Tower Phase 2",
     "project_code": "PRJ-APEX-SIH26122",
@@ -67,7 +67,7 @@
     "file_category": "3d_blueprint_model",
     "file_size_bytes": 33248,
     "notes": "Generated 3D Model (procedural_fallback)",
-    "created_at": "2026-09-08T20:52:45.175898",
+    "created_at": "2026-09-11T16:13:38.678044",
     "metadata": {
       "wall_count": 14,
       "column_count": 18,
@@ -108,6 +108,407 @@
     "file_size_bytes": 0,
     "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
     "created_at": "2026-09-08T20:52:45.055595",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_777466815",
+    "project_id": 1,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_47.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_47.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T06:44:10.630117",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_4031607075",
+    "project_id": 1,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_47.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_47.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T06:44:10.684895",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_683606085",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_48.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_48.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T17:20:10.824383",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_4282466255",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_48.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_48.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T17:20:10.858877",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1422887769",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "2D_Technical_Blueprint.pdf",
+    "rel_file_path": "static/models/3d_blueprints/bp_proj20_2D_Technical.obj",
+    "file_category": "3d_blueprint_model",
+    "file_size_bytes": 33249,
+    "notes": "Generated 3D Model (procedural_fallback)",
+    "created_at": "2026-09-10T18:02:54.855368",
+    "metadata": {
+      "wall_count": 14,
+      "column_count": 18,
+      "slab_area_sqm": 450.0,
+      "format": "obj"
+    },
+    "file_payload_base64": "bXRsbGliIGJwX3Byb2oyMF8yRF9UZWNobmljYWwubXRsDQojIENvbnN0cnVjdFN5bmMgQUkgVWx0cmEtRGV0YWlsZWQgM0QgTW9kZWwgLSBSZXNpZGVudGlhbF9Ib3VzZQ0KDQp2IC0xNC4wMDAwIC0wLjUwMDAgLTkuMDAwMA0KdiAxNC4wMDAwIC0wLjUwMDAgLTku...[TRUNCATED_FOR_VIEW]",
+    "full_base64_stored": true
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1033341354",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_49.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_49.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T17:57:19.792832",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1523315477",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_49.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_49.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T17:57:19.829217",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3949350235",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_50.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_50.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T17:57:52.671821",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_74989725",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_50.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_50.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T17:57:52.708191",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3003144931",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_51.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_51.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T17:59:26.744384",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1582940511",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_51.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_51.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T17:59:26.785483",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_2887468891",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_52.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_52.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T18:00:50.017670",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3037300740",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_52.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_52.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T18:00:50.041586",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3412346558",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_53.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_53.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T18:01:06.064229",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1363210498",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_53.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_53.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T18:01:06.098949",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1257868923",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_54.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_54.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T18:01:23.656232",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3056282712",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_54.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_54.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T18:01:23.679941",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3766361527",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_55.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_55.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-10T18:02:54.665470",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_11859094",
+    "project_id": 20,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_55.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_55.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-10T18:02:54.701980",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_1812326748",
+    "project_id": 1,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "foundation_photo_56.jpg",
+    "rel_file_path": "uploads/photos/foundation_photo_56.jpg",
+    "file_category": "photo",
+    "file_size_bytes": 0,
+    "notes": "Ready-mix concrete pour sector B footings",
+    "created_at": "2026-09-11T16:13:38.405780",
+    "metadata": {
+      "source_author": "Site Inspector",
+      "status": "pending_review"
+    },
+    "file_payload_base64": "",
+    "full_base64_stored": false
+  },
+  {
+    "doc_id": "Apex_Commercial_Tower_Phase_2_3391802568",
+    "project_id": 1,
+    "project_name": "Apex Commercial Tower Phase 2",
+    "project_code": "PRJ-APEX-SIH26122",
+    "nosql_table_name": "Apex_Commercial_Tower_Phase_2",
+    "filename": "inv_steel_rebar_56.pdf",
+    "rel_file_path": "uploads/invoices/inv_steel_rebar_56.pdf",
+    "file_category": "invoice_pdf",
+    "file_size_bytes": 0,
+    "notes": "Steel rebar invoice PO-884 for 15.0 tons at $850/ton",
+    "created_at": "2026-09-11T16:13:38.463064",
     "metadata": {
       "source_author": "Site Inspector",
       "status": "pending_review"

@@ -1,6 +1,6 @@
 [
   {
-    "doc_id": "Metro_Tower_Phase_2_1623938915",
+    "doc_id": "Metro_Tower_Phase_2_2020630837",
     "project_id": 1,
     "project_name": "Metro Tower Phase 2",
     "project_code": "PRJ-METRO-002",
@@ -10,7 +10,7 @@
     "file_category": "invoice_pdf",
     "file_size_bytes": 0,
     "notes": "Steel rebar supplier invoice #1042",
-    "created_at": "2026-09-08T20:52:45.597911",
+    "created_at": "2026-09-11T16:13:39.217133",
     "metadata": {
       "input_type": "invoice_pdf",
       "source_author": "Vendor SteelCo",
@@ -22,7 +22,7 @@
     "full_base64_stored": false
   },
   {
-    "doc_id": "Metro_Tower_Phase_2_1400164565",
+    "doc_id": "Metro_Tower_Phase_2_1415956298",
     "project_id": 1,
     "project_name": "Metro Tower Phase 2",
     "project_code": "PRJ-METRO-002",
@@ -32,13 +32,13 @@
     "file_category": "photo",
     "file_size_bytes": 0,
     "notes": "Site foundation photo",
-    "created_at": "2026-09-08T20:52:45.425994",
+    "created_at": "2026-09-11T16:13:39.109266",
     "metadata": {},
     "file_payload_base64": "",
     "full_base64_stored": false
   },
   {
-    "doc_id": "Metro_Tower_Phase_2_1640455871",
+    "doc_id": "Metro_Tower_Phase_2_3773753411",
     "project_id": 1,
     "project_name": "Metro Tower Phase 2",
     "project_code": "PRJ-METRO-002",
@@ -48,7 +48,7 @@
     "file_category": "3d_blueprint_model",
     "file_size_bytes": 0,
     "notes": "Generated 3D Model: Metro Tower 3D Mesh",
-    "created_at": "2026-09-08T20:52:45.628128",
+    "created_at": "2026-09-11T16:13:39.228709",
     "metadata": {
       "wall_count": 18,
       "column_count": 24,
